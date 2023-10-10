@@ -1,0 +1,1253 @@
+Array :
+=======
+
+Que 1 : Set Matrix Zeros (Striver SDE Sheet)
+Level : Medium
+Link : https://takeuforward.org/data-structure/set-matrix-zero/
+------------------------
+Examples 1:
+
+Input: matrix=[[1,1,1],[1,0,1],[1,1,1]]
+
+Output: [[1,0,1],[0,0,0],[1,0,1]]
+
+Explanation: Since matrix[2][2]=0. Therefor the 2nd column and 2nd row wil be set to 0.
+
+Input: matrix=[[0,1,2,0],[3,4,5,2],[1,3,1,5]]
+
+Output:[[0,0,0,0],[0,4,5,0],[0,3,1,0]]
+
+Explanation:Since matrix[0][0]=0 and matrix[0][3]=0. Therefore 1st row, 1st column and 4th column will be set to 0
+
+Brute Force Approach
+--------------------
+
+Approach:
+The steps are the following:
+
+1. First, we will use two loops(nested loops) to traverse all the cells of the matrix.
+2. If any cell (i,j) contains the value 0, we will mark all cells in row i and column j with -1 except
+those which contain 0.
+3. We will perform step 2 for every cell containing 0.
+4. Finally, we will mark all the cells containing -1 with 0.
+5. Thus the given matrix will be modified according to the question.
+Note: Here, we are assuming that the matrix does not contain any negative numbers. But if it contains negatives,
+we need to find some other ways to mark the cells instead of marking them with -1.
+
+Program :
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class SetMatrixZerosBruteForce {
+
+    public static void main(String[] args) {
+        ArrayList<ArrayList<Integer>> matrix = new ArrayList<>();
+        matrix.add(new ArrayList<>(Arrays.asList(1,1,1)));
+        matrix.add(new ArrayList<>(Arrays.asList(1,0,1)));
+        matrix.add(new ArrayList<>(Arrays.asList(1,1,1)));
+
+        // Checking Initial Matrix
+        System.out.println("The Matrix :");
+        for(ArrayList<Integer> row : matrix) {
+            for (Integer element : row) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
+        }
+
+        int rows = matrix.size();
+        int cols = matrix.get(0).size();
+
+        ArrayList<ArrayList<Integer>> answer = setZeroMatrix(matrix, rows, cols);
+
+        // Checking Final Matrix
+        System.out.println("The Final Matrix : ");
+        for(ArrayList<Integer> row : answer) {
+            for(Integer element : row) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static ArrayList<ArrayList<Integer>> setZeroMatrix(ArrayList<ArrayList<Integer>> matrix,
+        int mRowSize, int mColSize)
+    {
+        // Find the Element Which Has 0
+        for(int row=0; row<mRowSize; row++) {
+            for(int col=0; col<mColSize; col++) {
+                if(matrix.get(row).get(col) == 0) {
+                    // Set Row Element as -1
+                    markRow(matrix, mRowSize, row);
+                    // Set Column Element as -1
+                    markCol(matrix, mColSize, col);
+                }
+            }
+        }
+
+        // Mark All -1 as 0
+        for(int row=0; row<mRowSize; row++) {
+            for(int col=0; col<mColSize; col++) {
+                if(matrix.get(row).get(col) == -1) {
+                    matrix.get(row).set(col, 0);
+                }
+            }
+        }
+
+        return matrix;
+    }
+
+    // Mark Total Row as -1
+    public static void markRow(ArrayList<ArrayList<Integer>> matrix, int size, int row) {
+        for (int i=0; i<size; i++) {
+            if(matrix.get(row).get(i) != 0) {
+                matrix.get(row).set(i, -1);
+            }
+        }
+    }
+
+    // Mark Total Col as -1
+    public static void markCol(ArrayList<ArrayList<Integer>> matrix, int size, int col) {
+        for(int j=0; j<size; j++) {
+            if(matrix.get(j).get(col) != 0) {
+                matrix.get(j).set(col, -1);
+            }
+        }
+    }
+}
+
+Complexity Analysis
+-----------------
+Time Complexity: O((N*M)*(N+M))+O(N*M),
+where N = no. of rows in the matrix and M = no. of columns in the matrix.
+Reason: Firstly, we are traversing the matrix to find the cells with the value 0.
+It takes O(N*M).
+Now, whenever we find any such cell we mark that row and column with -1.
+This process takes O(N+M).
+So, combining this the whole process, finding and marking, takes O((N*M)*(N + M)).
+Another O(N*M) is taken to mark all the cells with -1 as 0 finally.
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
+Better Approach :
+-----------------
+
+Algorithm / Intuition
+In the previous approach, we were marking the row and column with -1 while traversing the matrix.
+Here we will reduce the time complexity by marking the cells after the traversal.
+
+Approach (Using two extra arrays):
+The steps are as follows:
+
+1. First, we will declare two arrays: a row array of size N and a col array of size M and both are
+   initialized with 0.
+2. Then, we will use two loops(nested loops) to traverse all the cells of the matrix.
+3. If any cell (i,j) contains the value 0, we will mark ith index of row array i.e. row[i] and jth
+   index of col array col[j] as 1. It signifies that all the elements in the ith row and jth column will
+   be 0 in the final matrix.
+4. We will perform step 3 for every cell containing 0.
+5. Finally, we will again traverse the entire matrix and we will put 0 into all the cells (i, j) for
+   which either row[i] or col[j] is marked as 1.
+6. Thus we will get our final matrix.
+
+Program :
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class SetMatrixZerosBetterApproach {
+    public static void main(String[] args) {
+        ArrayList<ArrayList<Integer>> matrix = new ArrayList<ArrayList<Integer>>();
+
+        matrix.add(new ArrayList<>(Arrays.asList(1,1,1)));
+        matrix.add(new ArrayList<>(Arrays.asList(1,0,1)));
+        matrix.add(new ArrayList<>(Arrays.asList(1,1,1)));
+
+        System.out.println("The Initial Matrix : ");
+
+        for (ArrayList<Integer> data : matrix) {
+            for(Integer element : data) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
+        }
+
+        int rows = matrix.size();
+        int cols = matrix.get(0).size();
+
+        System.out.println("The Final Matrix : ");
+        ArrayList<ArrayList<Integer>> answer = setMatrixZero(matrix, rows, cols);
+
+        for (ArrayList<Integer> row  : answer) {
+            for (Integer element : row) {
+                System.out.print(element +" ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static ArrayList<ArrayList<Integer>> setMatrixZero(ArrayList<ArrayList<Integer>> matrix,
+        int rowSize, int colSize)
+    {
+        // Set the UpperRow Array & SideColumn Array
+        int[] upperRow = new int[rowSize];
+        int[] sideCol = new int[colSize];
+
+        // Set All UpperRow and SideCol as 1, If we found matrix(row, col) as 0
+        for(int row=0; row<rowSize; row++) {
+            for(int col=0; col<colSize; col++) {
+                if(matrix.get(row).get(col) == 0) {
+                    upperRow[row] = 1;
+                    sideCol[col] = 1;
+                }
+            }
+        }
+
+        // Set matrix(row, col) as 0, If we Found UpperRow or SideCol as 1
+        for(int row=0; row<rowSize; row++) {
+            for (int col=0; col<colSize; col++) {
+                if(upperRow[row] == 1 || sideCol[col] == 1) {
+                    matrix.get(row).set(col, 0);
+                }
+            }
+        }
+
+        return matrix;
+    }
+}
+
+Output :
+The Initial Matrix :
+1 1 1
+1 0 1
+1 1 1
+The Final Matrix :
+1 0 1
+0 0 0
+1 0 1
+
+Complexity Analysis :
+Time Complexity: O(2*(N*M)), where N = no. of rows in the matrix and M = no. of columns in the matrix.
+Reason: We are traversing the entire matrix 2 times and each traversal is taking O(N*M) time complexity.
+
+Space Complexity: O(N) + O(M), where N = no. of rows in the matrix and M = no. of columns in the matrix.
+Reason: O(N) is for using the row array and O(M) is for using the col array.
+
+
+Optimal Approach :
+------------------
+
+Intuition:
+----------
+In the previous approach, the time complexity is minimal as the traversal of a matrix takes at least
+O(N*M)(where N = row and M = column). In this approach, we can just improve the space complexity.
+So, instead of using two extra matrices row and col, we will use the 1st row and 1st column of the
+given matrix to keep a track of the cells that need to be marked with 0. But here comes a problem.
+If we try to use the 1st row and 1st column to serve the purpose, the cell matrix[0][0] is taken
+twice. To solve this problem we will take an extra variable col0 initialized with 1. Now the entire 1st
+row of the matrix will serve the purpose of the row array. And the 1st column from (0,1) to (0,m-1)
+with the col0 variable will serve the purpose of the col array.
+
+If any cell in the 0th row contains 0, we will mark matrix[0][0] as 0 and if any cell in the 0th column
+contains 0, we will mark the col0 variable as 0.
+
+Thus we can optimize the space complexity.
+
+Approach:
+---------
+
+The steps are as follows:
+
+1. First, we will traverse the matrix and mark the proper cells of 1st row and 1st column with 0
+accordingly. The marking will be like this: if cell(i, j) contains 0, we will mark the i-th row i.e.
+matrix[i][0] with 0 and we will mark j-th column i.e. matrix[0][j] with 0.
+If i is 0, we will mark matrix[0][0] with 0 but if j is 0, we will mark the col0 variable with 0 instead
+of marking matrix[0][0] again.
+2. After step 1 is completed, we will modify the cells from (1,1) to (n-1, m-1) using the values from
+the 1st row, 1st column, and col0 variable.
+We will not modify the 1st row and 1st column of the matrix here as the modification of the rest of the
+matrix(i.e. From (1,1) to (n-1, m-1)) is dependent on that row and column.
+3. Finally, we will change the 1st row and column using the values from matrix[0][0] and col0
+variable. Here also we will change the row first and then the column.
+If matrix[0][0] = 0, we will change all the elements from the cell (0,1) to (0, m-1), to 0.
+If col0 = 0, we will change all the elements from the cell (0,0) to (n-1, 0), to 0.
+
+Program :
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class SetMatrixZerosOptimalApproach {
+    public static void main(String[] args) {
+        ArrayList<ArrayList<Integer>> matrix = new ArrayList<ArrayList<Integer>>();
+        matrix.add(new ArrayList<>(Arrays.asList(1,1,1,1)));
+        matrix.add(new ArrayList<>(Arrays.asList(1,0,1,1)));
+        matrix.add(new ArrayList<>(Arrays.asList(1,1,0,1)));
+        matrix.add(new ArrayList<>(Arrays.asList(0,1,1,1)));
+
+        System.out.println("The Initial Array : ");
+        for(ArrayList<Integer> arrayList : matrix) {
+            for(Integer element : arrayList) {
+                System.out.print(element+" ");
+            }
+            System.out.println();
+        }
+
+        int rows = matrix.size();
+        int cols = matrix.get(0).size();
+
+        ArrayList<ArrayList<Integer>> answer = setMatrixZeros(matrix, rows, cols);
+
+        System.out.println("The Final Array : ");
+        for(ArrayList<Integer> arrayList : answer) {
+            for(Integer element : arrayList) {
+                System.out.print(element+" ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static ArrayList<ArrayList<Integer>> setMatrixZeros(ArrayList<ArrayList<Integer>> matrix, int rowSize, int colSize) {
+
+        int col0 = 1;
+
+        for(int row=0; row<rowSize; row++) {
+            for(int col=0; col<colSize; col++) {
+                if(matrix.get(row).get(col) == 0) {
+                    matrix.get(row).set(0,0);
+
+                    if(col != 0) {
+                        matrix.get(0).set(col, 0);
+                    }
+                    else {
+                        col0 = 0;
+                    }
+                }
+            }
+        }
+
+        for(int row=1; row<rowSize; row++) {
+            for(int col=1; col<colSize; col++) {
+                // Check the Position matrix.get(row, col) is non 0
+                if(matrix.get(row).get(col) != 0) {
+                    // check the current Row's Oth Element is 0 OR
+                    // check the current Col's Oth Element is 0
+                    if(matrix.get(row).get(0) == 0 || matrix.get(0).get(col) == 0) {
+                        matrix.get(row).set(col, 0);
+                    }
+                }
+            }
+        }
+
+        // Check for first Row's (0,0) is 0 to mark all 0
+        if(matrix.get(0).get(0) == 0) {
+            // it travers in total column's
+            for(int i=0; i<colSize; i++) {
+                // marking every element of first row as 0
+                matrix.get(0).set(i, 0);
+            }
+        }
+
+        // Check for col0 is 0 to mark first Column
+        if(col0 == 0) {
+            // it travers in total row's
+            for (int i=0; i<rowSize; i++) {
+                // marking every element of first colum as 0
+                matrix.get(i).set(0, 0);
+            }
+        }
+
+        return matrix;
+    }
+}
+
+Output :
+The Initial Array :
+1 1 1 1
+1 0 1 1
+1 1 0 1
+0 1 1 1
+The Final Array :
+0 0 0 1
+0 0 0 0
+0 0 0 0
+0 0 0 0
+
+Complexity Analysis :
+Time Complexity: O(2*(N*M)), where N = no. of rows in the matrix and M = no. of columns in the matrix.
+Reason: In this approach, we are also traversing the entire matrix 2 times and each traversal is taking
+        O(N*M) time complexity.
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
+---------------------------------------XXX-----------------------------------------------
+
+Que 2 : next_permutation : find next lexicographically greater permutation
+Level : Medium
+Link : https://takeuforward.org/data-structure/next_permutation-find-next-lexicographically-greater-permutation/
+
+Example 1 :
+---------
+Input format: Arr[] = {1,3,2}
+Output: Arr[] = {2,1,3}
+Explanation: All permutations of {1,2,3} are {{1,2,3} , {1,3,2}, {2,13} , {2,3,1} , {3,1,2} , {3,2,1}}.
+So, the next permutation just after {1,3,2} is {2,1,3}.
+
+Input format: Arr[] = {3,2,1}
+Output: Arr[] = {1,2,3}
+Explanation: As we see all permutations of {1,2,3}, we find {3,2,1} at the last position.
+So, we have to return the topmost permutation.
+
+Brute Force Approach :
+--------------------
+
+Algorithm / Intuition
+Brute Force: Finding all possible permutations.
+
+Approach :
+
+Step 1: Find all possible permutations of elements present and store them.
+
+Step 2: Search input from all possible permutations.
+
+Step 3: Print the next permutation present right after it.
+
+For reference of how to find all possible permutations,
+follow up https://www.youtube.com/watch?v=f2ic2Rsc9pU&t=32s.
+This video shows for distinct elements but code works for duplicates too.
+
+Complexity Analysis
+For finding, all possible permutations, it is taking N!xN. N represents the number of elements present
+in the input array. Also for searching input arrays from all possible permutations will take N!.
+Therefore, it has a Time complexity of O(N!xN).
+
+Space Complexity :
+Since we are not using any extra spaces except stack spaces for recursion calls.
+So, it has a space complexity of O(1).
+
+Optimal Approach :
+-----------------
+
+Algorithm / Intuition
+The steps are the following:
+
+1.  Find the break-point, i: Break-point means the first index i from the back of the given array where
+    arr[i] becomes smaller than arr[i+1].
+    For example, if the given array is {2,1,5,4,3,0,0}, the break-point will be index 1(0-based indexing).
+    Here from the back of the array, index 1 is the first index where arr[1] i.e. 1 is smaller than arr[i+1] i.e. 5.
+    To find the break-point, using a loop we will traverse the array backward and store the index i where arr[i]
+    is less than the value at index (i+1) i.e. arr[i+1].
+2.  If such a break-point does not exist i.e. if the array is sorted in decreasing order, the given permutation
+    is the last one in the sorted order of all possible permutations. So, the next permutation must be the
+    first i.e. the permutation in increasing order.
+    So, in this case, we will reverse the whole array and will return it as our answer.
+3.  If a break-point exists:
+    3.1 Find the smallest number i.e. > arr[i] and in the right half of index i(i.e. from index i+1 to n-1)
+    and swap it with arr[i].
+    3.2 Reverse the entire right half(i.e. from index i+1 to n-1) of index i. And finally, return the array.
+
+Program :
+--------
+
+public class NextPermutations {
+    public static List<Integer> nextGreaterPermutation(List<Integer> list) {
+        int n = list.size();
+        int breakIndex = -1;
+
+        // Find the BreakIndex
+        for(int i=n-2; i>=0; i--) {
+            if(list.get(i) < list.get(i+1)) {
+                breakIndex = i;
+                break;
+            }
+        }
+
+        // If BreakIndex is -1 then reverse a List
+        if(breakIndex == -1) {
+            Collections.reverse(list);
+            return list;
+        }
+
+        // Find Out the Next Greater Element Of BreakIndex
+        for(int i=n-1; i>breakIndex; i--) {
+            if(list.get(i) > list.get(breakIndex)) {
+                int temp = list.get(breakIndex);
+                list.set(breakIndex, list.get(i));
+                list.set(i, temp);
+                break;
+            }
+        }
+
+        // Revers Remaining Element
+        List<Integer> sublist = list.subList(breakIndex+1, n);
+
+        Collections.reverse(sublist);
+
+        return list;
+    }
+
+    public static void main(String args[]) {
+        List<Integer> A = Arrays.asList(new Integer[] {1,2,3});
+        List<Integer> ans = nextGreaterPermutation(A);
+
+        System.out.print("The next permutation is: [");
+        for (int i = 0; i < ans.size(); i++) {
+            System.out.print(ans.get(i) + " ");
+        }
+        System.out.println("]");
+    }
+}
+
+
+Complexity Analysis :
+---------------------
+Time Complexity: O(3N), where N = size of the given array
+Finding the break-point, finding the next greater element, and reversal at the end takes O(N) for each,
+where N is the number of elements in the input array. This sums up to 3*O(N) which is approximately O(3N).
+
+Space Complexity: Since no extra storage is required. Thus, its space complexity is O(1).
+
+Output : The next permutation is: [1 3 2]
+
+---------------------------------------XXX-----------------------------------------------
+
+Que 3 : Kadane’s Algorithm : Maximum Subarray Sum in an Array
+Level : Medium
+Link : https://takeuforward.org/data-structure/kadanes-algorithm-maximum-subarray-sum-in-an-array/
+
+Problem Statement: Given an integer array arr, find the contiguous subarray (containing at least
+one number) which has the largest sum and returns its sum and prints the subarray.
+
+Example 1:
+
+Input: arr = [-2,1,-3,4,-1,2,1,-5,4]
+
+Output: 6
+
+Explanation: [4,-1,2,1] has the largest sum = 6.
+
+Examples 2:
+
+Input: arr = [1]
+
+Output: 1
+
+Explanation: Array has only one element and which is giving positive sum of 1.
+
+Brute Force Approach
+--------------------
+
+Intuition:
+----------
+We will check the sum of every possible subarray and consider the maximum among them.
+To get every possible subarray sum, we will be using three nested loops.
+The first loops(say i and j) will iterate over every possible starting index and ending index of a subarray.
+Basically, in each iteration, the subarray range will be from index i to index j.
+Using another loop we will get the sum of the elements of the subarray [i…..j]. Among all values of the sum calculated,
+we will consider the maximum one.
+
+Approach:
+The steps are as follows:
+
+1.  First, we will run a loop(say i) that will select every possible starting index of the subarray.
+    The possible starting indices can vary from index 0 to index n-1(n = size of the array).
+2.  Inside the loop, we will run another loop(say j) that will signify the ending index of the subarray.
+    For every subarray starting from the index i, the possible ending index can vary from index i to n-1(n = size of the array).
+3.  After that for each subarray starting from index i and ending at index j (i.e. arr[i….j]),
+    we will run another loop to calculate the sum of all the elements(of that particular subarray).
+
+    Note: We are selecting every possible subarray using two nested loops and for each of them,
+    we add all its elements using another loop.
+
+Program :
+---------
+
+public class SubArraySumBruteForce {
+    public static void main(String[] args) {
+        int[] arr = { -2, 1, -3, 4, -1, 2, 1, -5, 4};
+        int n = arr.length;
+        int maxSum = maxSubArraySum(arr, n);
+        System.out.println("The maximum Sub Array sum is: " + maxSum);
+    }
+
+    static int maxSubArraySum(int[] arr, int size) {
+        int maximum = Integer.MIN_VALUE;
+
+        // Traverse from the Index by Index
+        for(int i = 0; i < size; i++) {
+
+            // Start Traverse From ith Index
+            for(int j = i; j < size; j++) {
+                // Initialise the sum variable
+                int sum = 0;
+
+                // Start traverse from ith Index to jth Index
+                for(int k = i; k <= j; k++) {
+                    sum += arr[k];
+                }
+
+                maximum = Math.max(sum, maximum);
+            }
+        }
+
+        return maximum;
+    }
+}
+
+Complexity Analysis
+-------------------
+Time Complexity: O(N^3), where N = size of the array.
+Reason: We are using three nested loops, each running approximately N times.
+
+Space Complexity: O(1) as we are not using any extra space.
+
+
+Better Approach
+----------------
+
+Algorithm / Intuition
+
+Intuition: If we carefully observe, we can notice that to get the sum of the current subarray we just
+need to add the current element(i.e. arr[j]) to the sum of the previous subarray i.e. arr[i….j-1].
+
+Assume previous subarray = arr[i……j-1]
+current subarray = arr[i…..j]
+Sum of arr[i….j] = (sum of arr[i….j-1]) + arr[j]
+
+This is how we can remove the third loop and while moving j pointer, we can calculate the sum.
+
+Approach:
+The steps are as follows:
+
+1.  First, we will run a loop(say i) that will select every possible starting index of the subarray.
+    The possible starting indices can vary from index 0 to index n-1(n = array size).
+2.  Inside the loop, we will run another loop(say j) that will signify the ending index as well as the
+    current element of the subarray. For every subarray starting from index i, the possible ending index
+    can vary from index i to n-1(n = size of the array).
+3.  Inside loop j, we will add the current element to the sum of the previous subarray i.e. sum = sum + arr[j].
+    Among all the sums the maximum one will be the answer.
+
+Program :
+---------
+
+public class SubArraySumBetterApproach {
+    public static void main(String[] args) {
+        int[] arr = { -2, 1, -3, 4, -1, 2, 1, -5, 4};
+        int n = arr.length;
+        int maxSum = maxSubArraySum(arr, n);
+        System.out.println("The maximum Sub Array sum is: " + maxSum);
+    }
+
+    static int maxSubArraySum(int[] arr, int size) {
+        int maximum = Integer.MIN_VALUE;
+
+        for(int i = 0; i < size; i++) {
+            int sum = 0;
+
+            for(int j = i; j < size; j++) {
+                // current subArray = arr[i.....j]
+
+                //add the current element arr[j]
+                // to the sum i.e. sum of arr[i...j-1]
+                sum += arr[j];
+                maximum = Math.max(sum, maximum);
+            }
+        }
+
+        return maximum;
+    }
+}
+
+
+Optimal Approach :
+------------------
+
+Algorithm / Intuition
+Intuition:
+The intuition of the algorithm is not to consider the subarray as a part of the answer if its sum is less than 0.
+A subarray with a sum less than 0 will always reduce our answer and so this type of subarray cannot be a
+part of the subarray with maximum sum.
+
+Here, we will iterate the given array with a single loop and while iterating we will add the elements in
+a sum variable. Now, if at any point the sum becomes less than 0, we will set the sum as 0 as we are not
+going to consider any subarray with a negative sum. Among all the sums calculated, we will consider the maximum one.
+
+Thus we can solve this problem with a single loop.
+
+Approach:
+The steps are as follows:
+
+1.  We will run a loop(say i) to iterate the given array.
+2.  Now, while iterating we will add the elements to the sum variable and consider the maximum one.
+3.  If at any point the sum becomes negative we will set the sum to 0 as we are not going to consider
+    it as a part of our answer.
+    Note: In some cases, the question might say to consider the sum of the empty subarray while solving this problem.
+    So, in these cases, before returning the answer we will compare the maximum subarray sum calculated
+    with 0(i.e. The sum of an empty subarray is 0). And after that, we will return the maximum one.
+    For e.g. if the given array is {-1, -4, -5}, the answer will be 0 instead of -1 in this case.
+
+Program :
+public class SubArraySumOptimalApproach {
+    public static void main(String[] args) {
+        int[] arr = { -2, 1, -3, 4, -1, 2, 1, -5, 4};
+        int n = arr.length;
+        long maxSum = maxSubArraySum(arr, n);
+        System.out.println("The maximum sub array sum is: " + maxSum);
+    }
+
+    static long maxSubArraySum(int[] arr, int size) {
+        long maxNumber = Long.MIN_VALUE;
+        long sum = 0;
+
+        for(int i=0; i<size; i++) {
+            sum += arr[i];
+
+            if(sum > maxNumber) {
+                maxNumber = sum;
+            }
+
+            // If sum < 0: discarded the calculated
+            if(sum < 0) {
+                sum = 0;
+            }
+        }
+
+        // To consider the sum of the empty sub array
+        // uncomment the following check:
+//        if(maxNumber < 0) {
+//            maxNumber = 0;
+//        }
+
+        return maxNumber;
+    }
+}
+
+
+Optimal with Follow-up Question :
+---------------------------------
+
+Algorithm / Intuition
+There might be more than one subarray with the maximum sum. We need to print any of them.
+
+Intuition: Our approach is to store the starting index and the ending index of the subarray.
+Thus we can easily get the subarray afterward without actually storing the subarray elements.
+
+If we carefully observe our algorithm, we can notice that the subarray always starts at the particular
+index where the sum variable is equal to 0, and at the ending index, the sum always crosses the previous maximum sum(i.e. maxi).
+
+*   So, we will keep a track of the starting index inside the loop using a start variable.
+*   We will take two variables ansStart and ansEnd initialized with -1. And when the sum crosses the maximum sum,
+    we will set ansStart to the start variable and ansEnd to the current index i.e. i.
+    The rest of the approach will be the same as Kadane’s Algorithm.
+
+Program :
+---------
+
+public class SubArraySumOptimalApproachPrint {
+    public static void main(String args[]) {
+        int[] arr = { -2, 1, -3, 4, -1, 2, 1, -5, 4};
+        int n = arr.length;
+        long maxSum = maxSubArraySum(arr, n);
+        System.out.println("The maximum sub array sum is : " + maxSum);
+    }
+
+    static int maxSubArraySum(int[] arr, int size) {
+        int sum = 0;
+        int maxNumber = Integer.MIN_VALUE;
+
+        int start = 0;
+        int ansStart = -1;
+        int ansEnd = -1;
+
+        for(int i=0; i<size; i++)
+        {
+            if(sum == 0) {
+                start = i;
+            }
+
+            sum += arr[i];
+
+            if(sum > maxNumber) {
+                maxNumber = sum;
+                ansStart = start;
+                ansEnd = i;
+            }
+
+            if(sum < 0) {
+                sum = 0;
+            }
+        }
+
+        System.out.print("The SubArray is = [ ");
+        for(int i=ansStart; i<=ansEnd; i++) {
+            System.out.print(arr[i]+" ");
+        }
+        System.out.println("]");
+
+        return maxNumber;
+    }
+}
+
+Output :
+The SubArray is = [ 4 -1 2 1 ]
+The maximum sub array sum is : 6
+
+---------------------------------------XXX-----------------------------------------------
+
+Que 4 : Sort an array of 0s, 1s and 2s
+Level : Medium
+Link : https://takeuforward.org/data-structure/sort-an-array-of-0s-1s-and-2s/
+
+Examples
+Input: nums = [2,0,2,1,1,0]
+Output: [0,0,1,1,2,2]
+
+Input: nums = [2,0,1]
+Output: [0,1,2]
+
+Input: nums = [0]
+Output: [0]
+
+Brute Force Approach :
+----------------------
+
+Algorithm / Intuition
+---------------------
+Sorting ( even if it is not the expected solution here but it can be considered as one of the approaches).
+Since the array contains only 3 integers, 0, 1, and 2. Simply sorting the array would arrange the elements in increasing order.
+
+Complexity Analysis
+Time Complexity: O(N*logN)
+
+Space Complexity: O(1)
+
+
+Better Approach :
+-----------------
+
+Algorithm / Intuition
+---------------------
+Keeping count of values
+
+Intuition: Since in this case there are only 3 distinct values in the array so it’s easy to maintain the
+count of all, Like the count of 0, 1, and 2. This can be followed by overwriting the array based on the
+frequency(count) of the values.
+
+Approach:
+--------
+
+1.  Take 3 variables to maintain the count of 0, 1 and 2.
+2.  Travel the array once and increment the corresponding counting variables
+
+( let’s consider count_0 = a, count_1 = b, count_2 = c )
+
+3.  In 2nd traversal of array, we will now over write the first ‘a’ indices / positions in array with ’0’,
+the next ‘b’ with ‘1’ and the remaining ‘c’ with ‘2’.
+
+Program :
+---------
+public class SortArray012BetterApproach {
+    public static void main(String[] args) {
+        int n = 6;
+        int[] arr = new int[] {0, 2, 1, 2, 0, 1};
+        sortArray(arr);
+        System.out.println("After sorting:");
+        for (int i = 0; i < n; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+
+    static void sortArray(int[] nums) {
+        int num0 = 0;
+        int num1 = 0;
+        int num2 = 0;
+
+        for(int i=0; i<nums.length; i++) {
+            if(nums[i] == 0) {
+                num0++;
+            }
+            else if(nums[i] == 1) {
+                num1++;
+            }
+            else {
+                num2++;
+            }
+        }
+
+
+        for(int i=0; i<num0; i++) {
+            nums[i] = 0;
+        }
+
+        for(int i=num0; i<num0+num1; i++) {
+            nums[i] = 1;
+        }
+
+        for(int i=num0+num1; i<num0+num1+num2; i++) {
+            nums[i] = 2;
+        }
+    }
+}
+
+
+Complexity Analysis
+Time Complexity: O(N) + O(N), where N = size of the array. First O(N) for counting the number of 0’s, 1’s, 2’s,
+and second O(N) for placing them correctly in the original array.
+
+Space Complexity: O(1) as we are not using any extra space.
+
+Optimal Approach :
+------------------
+
+Algorithm / Intuition
+This problem is a variation of the popular Dutch National flag algorithm.
+
+This algorithm contains 3 pointers i.e. low, mid, and high, and 3 main rules.  The rules are the following:
+
+*   arr[0….low-1] contains 0. [Extreme left part]
+*   arr[low….mid-1] contains 1.
+*   arr[high+1….n-1] contains 2. [Extreme right part], n = size of the array
+
+The middle part i.e. arr[mid….high] is the unsorted segment. So, hypothetically the array with different
+markers will look like the following:
+
+In our case, we can assume that the entire given array is unsorted and so we will place the pointers accordingly.
+For example, if the given array is: [2,0,2,1,1,0], the array with the 3 pointers will look like the following:
+
+
+Here, as the entire array is unsorted, we have placed the mid pointer in the first index and the high pointer in
+the last index. The low is also pointing to the first index as we have no other index before 0. Here, we are mostly
+interested in placing the ‘mid’ pointer and the ‘high’ pointer as they represent the unsorted part in the hypothetical array.
+
+Now, let’s understand how the pointers will work to make the array sorted.
+
+Approach:
+
+Note: Here in this tutorial we will work based on the value of the mid pointer.
+
+The steps will be the following:
+
+1.  First, we will run a loop that will continue until mid <= high.
+2.  There can be three different values of mid pointer i.e. arr[mid]
+    2.1 If arr[mid] == 0, we will swap arr[low] and arr[mid] and will increment both low and mid.
+    Now the subarray from index 0 to (low-1) only contains 0.
+    2.2 If arr[mid] == 1, we will just increment the mid pointer and then the index (mid-1) will
+    point to 1 as it should according to the rules.
+    2.3 If arr[mid] == 2, we will swap arr[mid] and arr[high] and will decrement high. Now the
+    subarray from index high+1 to (n-1) only contains 2.
+    In this step, we will do nothing to the mid-pointer as even after swapping, the subarray from mid
+    to high(after decrementing high) might be unsorted. So, we will check the value of mid again in the next iteration.
+3.  Finally, our array should be sorted.
+
+Program :
+---------
+
+/**
+ * Dutch National flag algorithm.
+ * */
+public class SortArray012OptimalApproach {
+    public static void main(String[] args) {
+        int n = 6;
+        int[] arr = new int[] {0, 2, 1, 2, 0, 1};
+        sortArray(arr);
+        System.out.println("After sorting:");
+        for (int i = 0; i < n; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+
+    public static void sortArray(int[] nums) {
+        int low = 0;
+        int mid = 0;
+        int high = nums.length-1;
+
+        while(mid <= high) {
+            if(nums[mid] == 0) {
+                int temp = nums[low];
+                nums[low] = nums[mid];
+                nums[mid] = temp;
+
+                low++;
+                mid++;
+            }
+            else if(nums[mid] == 1) {
+                mid++;
+            }
+            else {
+                int temp = nums[mid];
+                nums[mid] = nums[high];
+                nums[high] = temp;
+
+                high--;
+            }
+        }
+    }
+}
+
+Output :
+After sorting:
+0 0 1 1 2 2
+
+Complexity Analysis
+Time Complexity: O(N), where N = size of the given array.
+Reason: We are using a single loop that can run at most N times.
+
+Space Complexity: O(1) as we are not using any extra space.
+
+---------------------------------------XXX-----------------------------------------------
+
+Que 5 : Stock Buy And Sell
+Level : Medium
+Link : https://takeuforward.org/data-structure/stock-buy-and-sell/
+
+Input: nums = [2,0,2,1,1,0]
+Output: [0,0,1,1,2,2]
+
+Input: nums = [2,0,1]
+Output: [0,1,2]
+
+Input: nums = [0]
+Output: [0]
+
+
+Brute Force Approach
+--------------------
+
+Algorithm / Intuition
+Intuition: We can simply use 2 loops and track every transaction and maintain a variable maxPro
+to contain the max value among all transactions.
+
+Approach:
+*   Use a for loop of ‘i’ from 0 to n.
+*   Use another for loop of j from ‘i+1’ to n.
+*   If arr[j] > arr[i] , take the difference and compare  and store it in the maxPro variable.
+*   Return maxPro.
+
+Program :
+---------
+
+public class StockBuyAndSellBruteForce {
+    public static void main(String[] args) {
+        int arr[] = {7,1,5,3,6,4};
+        int maxPro = maxProfit(arr);
+        System.out.println("Max profit is: " + maxPro);
+    }
+
+    public static int maxProfit(int[] prices) {
+        int maxProfit = Integer.MAX_VALUE;
+        int size = prices.length;
+
+        for(int i=0; i<size; i++) {
+            for(int j=i+1; j<size; j++) {
+                if(prices[j] > prices[i]) {
+                    maxProfit = Math.max(prices[j] - prices[i], maxProfit);
+                }
+            }
+        }
+
+        return maxProfit;
+    }
+}
+
+Output :
+--------
+Max profit is: 5
+
+Complexity Analysis :
+---------------------
+Time complexity: O(n^2)
+Space Complexity: O(1)
+
+
+Optimal Approach
+----------------
+
+Algorithm / Intuition
+Intuition: We will linearly travel the array. We can maintain a minimum from the start of the array
+and compare it with every element of the array, if it is greater than the minimum then take the
+difference and maintain it in max, otherwise update the minimum.
+
+Approach:
+---------
+
+*   Create a variable maxPro and store 0 initially.
+*   Create a variable minPrice and store some larger value(ex: MAX_VALUE) value initially.
+*   Run a for loop from 0 to n.
+*   Update the minPrice if it is greater than the current element of the array
+*   Take the difference of the minPrice with the current element of the array and compare and maintain it in maxPro.
+*   Return the maxPro.
+
+Program:
+-------
+
+public class StockBuyAndSellOptimalSolution {
+    public static void main(String[] args) {
+        int arr[] = {7,1,5,3,6,4};
+        int maxPro = maxProfit(arr);
+        System.out.println("Max profit is: " + maxPro);
+    }
+
+    public static int maxProfit(int[] prices) {
+        int minValue = Integer.MAX_VALUE;
+        int maxValue = 0;
+        int size = prices.length;
+
+        for(int i=0; i<size; i++) {
+            minValue = Math.min(prices[i], minValue);
+            maxValue = Math.max(prices[i]-minValue, maxValue);
+        }
+
+        return maxValue;
+    }
+}
+
+Output :
+Max profit is: 5
+
+Complexity Analysis
+Time complexity: O(n)
+
+Space Complexity: O(1)
+
+---------------------------------------XXX-----------------------------------------------
+
+Que 6 : Rotate Image by 90 degree
+Level : Medium
+Link : https://takeuforward.org/data-structure/rotate-image-by-90-degree/
+
+Example 1:
+
+Input: [[1,2,3],[4,5,6],[7,8,9]]
+
+Output: [[7,4,1],[8,5,2],[9,6,3]]
+
+Explanation: Rotate the matrix simply by 90 degree clockwise and return the matrix.
+
+Example 2:
+
+Input: [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]
+
+Output:[[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
+
+Explanation: Rotate the matrix simply by 90 degree clockwise and return the matrix
+
+Brute Force Approach
+--------------------
+
+Algorithm / Intuition
+Approach: Take another dummy matrix of n*n, and then take the first row of the matrix and put it in
+the last column of the dummy matrix, take the second row of the matrix, and put it in the second last
+column of the matrix and so.
+
+Program :
+--------
+
+public class RotateMatrixBruteForce {
+    public static void main(String[] args) {
+        int arr[][] =  {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        int rotated[][] = rotate(arr);
+        System.out.println("Rotated Image");
+        for (int i = 0; i < rotated.length; i++) {
+            for (int j = 0; j < rotated.length; j++) {
+                System.out.print(rotated[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static int[][] rotate(int[][] matrix) {
+        int n = matrix.length;
+        int rotateMatrix[][] = new int[n][n];
+
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                rotateMatrix[j][n-i-1] = matrix[i][j];
+            }
+        }
+
+        return rotateMatrix;
+    }
+}
+
+Output :
+Rotated Image
+7 4 1
+8 5 2
+9 6 3
+
+Complexity Analysis
+-------------------
+Time Complexity: O(N*N) to linearly iterate and put it into some other matrix.
+Space Complexity: O(N*N) to copy it into some other matrix.
+
+
+Optimal Approach
+----------------
+
+Algorithm / Intuition
+Intuition: By observation, we see that the first column of the original matrix is the reverse of
+the first row of the rotated matrix, so that’s why we transpose the matrix and then reverse each row,
+and since we are making changes in the matrix itself space complexity gets reduced to O(1).
+
+Approach:
+---------
+Step 1: Transpose the matrix. (transposing means changing columns to rows and rows to columns)
+Step 2: Reverse each row of the matrix.
+
+program:
+--------
+
+public class RotateMatrixOptimalApproach {
+    public static void main(String[] args) {
+        int arr[][] =  {{11, 12, 13, 14}, {15, 16, 17, 18}, {19, 20, 21, 22}, {23, 24, 25, 26}};
+        rotate(arr);
+        System.out.println("Rotated Image");
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    static void rotate(int[][] matrix) {
+        // find out the transpose of matrix
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int size = matrix.length;
+
+        for(int i=0; i<row; i++) {
+            for(int j=i; j<col; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+
+        // reverse the transpose matrix
+        for(int i=0; i<size; i++) {
+            for(int j=0; j<size/2; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[i][size-j-1];
+                matrix[i][size-j-1] = temp;
+            }
+        }
+    }
+}
+
+Output :
+Rotated Image
+23 19 15 11
+24 20 16 12
+25 21 17 13
+26 22 18 14
+
+Complexity Analysis :
+Time Complexity: O(N*N) + O(N*N).One O(N*N) is for transposing the matrix and the other is for
+reversing the matrix.
+Space Complexity: O(1).
+
+---------------------------------------XXX-----------------------------------------------

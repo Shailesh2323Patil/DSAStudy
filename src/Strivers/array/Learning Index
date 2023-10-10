@@ -1,0 +1,66 @@
+Array :
+=======
+
+Medium :
+--------
+
+Set Matrix Zeros - Done
+
+Next Permutation - Done
+
+Kadane's Algorithm - Done
+
+Sort an array of 0's 1's and 2's - Done
+
+Stock Buy and Sell - Done
+
+Rotate Matrix - Done
+
+Find the duplicate in an array of N+1 integers
+
+Majority Element (>n/2 times)
+
+2Sum Problem
+
+Longest Consecutive Sequence
+
+Inversion of Array (Pre-req: Merge Sort)
+
+
+Hard :
+------
+Pascal's Triangle
+
+Merge Overlapping Subintervals
+
+Merge two sorted arrays without extra space
+
+Repeat and Missing Number
+
+Majority Element (n/3 times)
+
+Reverse Pairs (Leetcode)
+
+4-Sum Problem
+
+Largest Subarray with K sum
+
+Count number of subarrays with given xor K
+
+
+Binary Search :
+===============
+Search in a 2 D matrix
+
+Recursion :
+=========
+Pow(x, n)
+
+Sliding Window :
+==============
+Longest Substring without repeat
+
+DP :
+====
+Grid Unique Paths
+
