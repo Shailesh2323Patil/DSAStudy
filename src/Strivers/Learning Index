@@ -29,7 +29,7 @@ Majority Element (>n/2 times) - Done
 
 Longest Consecutive Sequence - Done
 
-Inversion of Array (Pre-req: Merge Sort)
+Inversion of Array (Pre-req: Merge Sort) - Done
 
 
 Hard :
@@ -68,4 +68,38 @@ Longest Substring without repeat
 DP :
 ====
 Grid Unique Paths
+
+
+String :
+========
+Easy :
+------
+Reverse Words in a String - Done
+Longest Common Prefix - Done
+
+
+Medium :
+--------
+Longest Palindrome in a string - Done
+
+Roman Number to Integer and vice versa - Done
+
+Implement ATOI/STRSTR
+
+Minimum characters needed to be inserted - Done
+
+Check for Anagrams - Done
+
+Compare version numbers - Done
+
+
+Hard :
+------
+Rabin Karp
+
+Z-Function
+
+KMP algo / LPS(pi) array
+
+Count and say
 

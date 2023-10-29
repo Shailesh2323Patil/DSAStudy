@@ -1,4 +1,4 @@
-package ShardhaDidi.array;
+package ShardhaDidi.array2D;
 
 import java.util.Scanner;
 

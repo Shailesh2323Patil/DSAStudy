@@ -1,0 +1,659 @@
+String
+======
+
+Que 1 : Reverse Words in a String
+Problem Statement: Given a string s, reverse the words of the string.
+Level : Easy
+Link : https://takeuforward.org/data-structure/reverse-words-in-a-string/
+
+Example 1:
+Input: s=”this is an amazing program”
+Output: “program amazing an is this”
+
+Example 2:
+Input: s=”This is decent”
+Output: “decent is This”
+
+Brute Force :
+-------------
+
+Solution 1(Brute Force)
+Intuition: We just need to print the words in reverse order. Can we somehow store them in
+reverse order of the occurrence and then simply add it to our answer?
+
+Approach
+*   Use a stack to push all the words in a stack
+*   Now, all the words of the string are present in the stack, but in reverse order
+*   Pop elements of the stack one by one and add them to our answer variable. Remember
+    to add a space between the words as well.
+*   Here’s a quick demonstration of the same
+
+Program :
+---------
+
+public class ReverseWordBruteForce {
+    public static void main(String[] args) {
+        //String str = "the sky is blue";
+        //String str = "  hello world  ";
+        String str = "a good   example";
+        System.out.println("Before reversing words: ");
+        System.out.println(str);
+
+        System.out.println("Before reversing words: ");
+        System.out.println(reverseWords(str));
+    }
+
+    public static String reverseWords(String str) {
+        Stack<String> stack = new Stack<>();
+
+        String temp = "";
+
+        // Remove Extra Space Before and After
+        str = str.trim();
+
+        int size = str.length();
+
+        for(int i=0; i<size; i++) {
+            if(str.charAt(i) == ' ') {
+                // Remove Extra Space from in between Words
+                if(str.charAt(i-1) == ' ') {
+                    continue;
+                }
+                stack.push(temp);
+                temp = "";
+            }
+            else {
+                temp += str.charAt(i);
+            }
+        }
+
+        stack.push(temp);
+
+        String ans = "";
+
+        while(stack.size() > 1) {
+            ans += stack.peek() + " ";
+            stack.pop();
+        }
+
+        ans += stack.peek();
+
+        return ans;
+    }
+}
+
+Output :
+Before reversing words:
+a good   example
+Before reversing words:
+example good a
+
+Time Complexity: O(N), Traversing the entire string
+Space Complexity: O(N), Stack and ans variable
+
+Optimal Approach :
+------------------
+
+Solution 2(Optimized Solution)
+Intuition: Notice, that we are using a stack in order to perform our task. Can we somehow
+not use it and reverse the words as we move through the string? Could we store a word in
+reverse order when we are adding it to our answer variable?
+
+Approach:
+*   We start traversing the string from the end until we hit a space. It indicates that
+    we have gone past a word and now we need to store it.
+*   We check if our answer variable is empty or not.
+*   If it’s empty, it indicates that this is the last word we need to print, and hence,
+    there should not be any space after this word.
+*   If it’s empty we add it to our result with a space after it. Here’s a quick demonstration
+    of the same.
+
+Program :
+---------
+
+public class ReverseWordOptimalApproach {
+    public static void main(String[] args) {
+        //String str = "the sky is blue";
+        //String str = "  hello world  ";
+        String str = "a good   example";
+        System.out.println("Before reversing words: ");
+        System.out.println(str);
+
+        System.out.println("Before reversing words: ");
+        System.out.println(reverseWords(str));
+    }
+
+    public static String reverseWords(String s) {
+        s = s.trim();
+
+        int left = 0;
+        int right = s.length() - 1;
+
+        String temp = "";
+        String ans = "";
+
+        while(left <= right) {
+            char ch = s.charAt(left);
+
+            if(ch != ' ') {
+                temp += ch;
+            }
+            else {
+                if(!ans.equals("")) {
+                    if(s.charAt(left - 1) == ' ') {
+                        left++;
+                        continue;
+                    }
+                    ans = temp+ " " + ans;
+                }
+                else {
+                    ans = temp;
+                }
+                temp = "";
+            }
+
+            left++;
+        }
+
+        ans = temp + " " + ans;
+
+        return ans;
+    }
+}
+
+Output :
+Before reversing words:
+a good   example
+Before reversing words:
+example good a
+
+Time Complexity: O(N), N~length of string
+
+Space Complexity: O(1), Constant Space
+
+---------------------------------------XXX-----------------------------------------------
+
+Que 2 : Longest Common Prefix
+Level : Easy
+Link : https://leetcode.com/problems/longest-common-prefix/description/
+
+Solution Link : https://leetcode.com/problems/longest-common-prefix/solutions/3174307/well-explained-code-using-strings-in-java/
+Approach
+--------
+This code is used to find the longest common prefix of an array of strings, which is defined as the longest string
+that is a prefix of all the strings in the array. By sorting the array and then comparing the first and last elements,
+the code is able to find the common prefix that would be shared by all strings in the array.
+
+1.  Sort the elements of an array of strings called "strs" in lexicographic (alphabetical) order using the
+    Arrays.sort(strs) method.
+2.  Assign the first element of the sorted array (the lexicographically smallest string) to a string variable s1.
+3.  Assign the last element of the sorted array (the lexicographically largest string) to a string variable s2.
+4.  Initialize an integer variable idx to 0.
+5.  Start a while loop that continues while idx is less than the length of s1 and s2.
+6.  Within the while loop, check if the character at the current index in s1 is equal to the character at the same
+    index in s2. If the characters are equal, increment the value of idx by 1.
+7.  If the characters are not equal, exit the while loop.
+8.  Return the substring of s1 that starts from the first character and ends at the idxth character (exclusive).
+
+Program :
+public class LongestPrefixCode {
+    public static void main(String[] args) {
+        String[] strings = {"flower","flow","flight"};
+
+        System.out.println("Common Prefix : "+longestCommonPrefix(strings));
+    }
+
+    public static String longestCommonPrefix(String[] strings) {
+        Arrays.sort(strings);
+
+        String s1 = strings[0];
+        String s2 = strings[strings.length - 1];
+
+        int index = 0;
+
+        while (index < s1.length() && index < s2.length()) {
+            if(s1.charAt(index) != s2.charAt(index)) {
+                break;
+            }
+            index++;
+        }
+
+        return s1.substring(0, index);
+    }
+}
+
+
+Output :
+Common Prefix : fl
+
+Complexity
+-----------
+*   Time complexity:
+1.  Sorting the array of strings takes O(Nlog(N)) time. This is because most of the common sorting algorithms like quicksort, mergesort,
+    and heapsort have an average time complexity of O(Nlog(N)).
+2.  Iterating over the characters of the first and last strings takes O(M) time. This is because the code compares the
+    characters of the two strings until it finds the first mismatch.
+
+Therefore, the total time complexity is O(Nlog(N) + M).
+
+*   Space complexity:
+    The space used by the two string variables s1 and s2 is proportional to the length of the longest string in the array. Therefore, the space complexity is O(1) as it does not depend on the size of the input array.
+    Reason for Sorting
+    The reason why we sort the input array of strings and compare the first and last strings is that the longest common prefix of all the strings must be a prefix of the first string and a prefix of the last string in the sorted array. This is because strings are ordered based on their alphabetical order (Lexicographical order).
+    For example, consider the input array of strings {"flower", "flow", "flight"}. After sorting the array, we get {"flight", "flow", "flower"}. The longest common prefix of all the strings is "fl", which is located at the beginning of the first string "flight" and the second string "flow". Therefore, by comparing the first and last strings of the sorted array, we can easily find the longest common prefix.
+
+---------------------------------------XXX-----------------------------------------------
+
+
+Que 3 : Longest Palindromic Substring
+Level : Medium
+Link : https://leetcode.com/problems/longest-palindromic-substring/description/
+
+Solution : https://leetcode.com/problems/longest-palindromic-substring/solutions/4069931/java-fastest-solution-easy-to-understand-9ms-o-n-memory-o-1/
+
+Intuition
+The code appears to use an efficient approach to find the longest palindromic substring within the given
+input string 's'. It employs the idea of expanding around centers to find both odd-length and even-length
+palindromes.
+
+Approach
+The longestPalindrome method iterates through each character of the input string and calls the
+extendPalindrome method to check for both odd and even-length palindromes. The extendPalindrome method
+uses the expanding technique to find the palindromic substring centered at the given indices.
+
+Program :
+public class LongestPalindromicString {
+    public static void main(String[] args) {
+        LongestPalindromicString longestPalindromicString = new LongestPalindromicString();
+
+        //String str = "babad";
+        String str = "cbbd";
+
+        System.out.println("Longest Palindromic String : ");
+        System.out.println(longestPalindromicString.longestPalindrome(str));
+    }
+
+    private static int maxLength = 0;
+    private static int start = 0;
+    public String longestPalindrome(String s) {
+        if(s == null || s.length() < 2) {
+            return s;
+        }
+
+        for(int i=0; i<s.length(); i++) {
+            expandString(s, i, i); // Check for odd-length palindrome
+            expandString(s, i, i+1); // Check for even-length palindrome
+        }
+
+        return s.substring(start, start + maxLength);
+    }
+
+    public static void expandString(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+
+        int length = right - left - 1;
+        if(length > maxLength) {
+            maxLength = length;
+            start = left + 1;
+        }
+    }
+}
+Output :
+Longest Palindromic String :
+bb
+
+Complexity
+Time complexity:
+The time complexity of this approach is O(n^2), where n is the length of the input string. This is because
+for each character in the input string, we potentially traverse the entire string to find the longest
+palindrome centered at that character.
+
+Space complexity:
+The space complexity is O(1) as the extra space used does not depend on the size of the input string.
+We only use a few integers ('maxLength' and 'start') to keep track of the longest palindrome, and the
+extendPalindrome function only uses a few local variables. The space used is constant regardless of the
+input string length.
+
+---------------------------------------XXX-----------------------------------------------
+
+Que 4 : Roman to Integer
+Problem Statement:
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+
+Symbol       Value
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+For example, 2 is written as II in Roman numeral, just two ones added together.
+12 is written as XII, which is simply X + II. The number 27 is written as XXVII,
+which is XX + V + II.
+
+Level : Easy
+Link : https://leetcode.com/problems/roman-to-integer/description/
+
+Solution : https://leetcode.com/problems/roman-to-integer/solutions/3651672/best-method-c-java-python-beginner-friendly/
+
+Intuition:
+The key intuition lies in the fact that in Roman numerals, when a smaller value appears
+before a larger value, it represents subtraction, while when a smaller value appears
+after or equal to a larger value, it represents addition.
+
+Explanation:
+1.  The unordered map m is created and initialized with mappings between Roman numeral
+    characters and their corresponding integer values. For example, 'I' is mapped to 1,
+    'V' to 5, 'X' to 10, and so on.
+
+2.  The variable ans is initialized to 0. This variable will accumulate the final integer value of the
+    Roman numeral string.
+
+3.  The for loop iterates over each character in the input string s.
+
+For the example "IX":
+
+1.  When i is 0, the current character s[i] is 'I'. Since there is a next character ('X'), and the value of
+    'I' (1) is less than the value of 'X' (10), the condition m[s[i]] < m[s[i+1]] is true. In this case,
+    we subtract the value of the current character from ans.
+
+    ans -= m[s[i]];
+    ans -= m['I'];
+    ans -= 1;
+    ans becomes -1.
+
+2.  When i is 1, the current character s[i] is 'X'. This is the last character in the string, so there is no
+    next character to compare. Since there is no next character, we don't need to evaluate the condition. In this
+    case, we add the value of the current character to ans.
+
+    ans += m[s[i]];
+    ans += m['X'];
+    ans += 10;
+    ans becomes 9.
+
+For the example "XI":
+
+1.  When i is 0, the current character s[i] is 'X'. Since there is a next character ('I'), and the value of 'X' (10)
+    is greater than the value of 'I' (1), the condition m[s[i]] < m[s[i+1]] is false. In this case, we add the value
+    of the current character to ans.
+
+    ans += m[s[i]];
+    ans += m['X'];
+    ans += 10;
+    ans becomes 10.
+
+2.  When i is 1, the current character s[i] is 'I'. This is the last character in the string, so there is no next
+    character to compare. Since there is no next character, we don't need to evaluate the condition. In this case,
+    we add the value of the current character to ans.
+
+    ans += m[s[i]];
+    ans += m['I'];
+    ans += 1;
+    ans becomes 11.
+
+4.  After the for loop, the accumulated value in ans represents the integer conversion of the Roman numeral string,
+    and it is returned as the result.
+
+Program :
+class Solution {
+    public int romanToInt(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+
+        int size = s.length();
+
+        Integer number = 0;
+
+        for(int i=0; i<size; i++) {
+            if(i < size-1 && map.get(s.charAt(i)) < map.get(s.charAt(i+1))) {
+                number -= map.get(s.charAt(i));
+            }
+            else {
+                number += map.get(s.charAt(i));
+            }
+        }
+
+        return number;
+    }
+}
+
+Output :
+Roman to Integer Of III = 3
+
+---------------------------------------XXX-----------------------------------------------
+
+Que : Check String is Palindrome
+
+Program :
+public class Palindrome {
+    public static void main(String[] args) {
+        String value = "CBABC";
+
+        System.out.println("Count Required for Palindrome = "+isPalindrome(value));
+    }
+
+    /**
+     * Two Pinter Approach
+     * */
+    public static boolean isPalindrome(String value) {
+        int i = 0;
+        int j = value.length() - 1;
+
+        char[] array = value.toCharArray();
+
+        while (i < j) {
+            if(array[i] != array[j]) {
+                return false;
+            }
+
+            i++;
+            j--;
+        }
+
+        return true;
+    }
+}
+Output :
+CBABC is Palindrome = true
+
+
+Que 5 : Minimum Characters required to make a String Palindromic
+Problem Statement : Given a string A. The only operation allowed is to insert characters at the beginning of the string.
+                    Find how many minimum characters are needed to be inserted to make the string a palindrome string.
+Level : Medium
+Link : https://www.interviewbit.com/problems/minimum-characters-required-to-make-a-string-palindromic/
+Solution : https://www.geeksforgeeks.org/java-program-to-check-whether-a-string-is-a-palindrome/
+
+
+Two Pointer Approach for Palindrome Program in Java
+
+1.  Initialize two pointers start and end to the beginning and end of the string, respectively.
+2.  While start is less than end, if the characters at the start and end pointers are equal, move
+    the start pointer one position to the right and the end pointer one position to the left. If
+    the characters are not equal, increment the res variable (which keeps track of the number of
+    characters that need to be added) and reset the start and end pointers to the beginning and
+    end of the string with a reduced number of characters.
+3.  When start is no longer less than end, return the value of res as the minimum number of
+    characters that need to be added to the front of the string to make it a palindrome.
+
+Program :
+
+public class MinimumCharToRequiredPalindrome {
+    public static void main(String[] args) {
+        String value = "ABFACD";
+        //String value = "AACECAAAA";
+        //String value = "ACECAA";
+        //String value = "hqghumeaylnlfdxfi";
+
+        System.out.println("Count Required for Palindrome = "+solve(value));
+    }
+
+    public static int solve(String value) {
+        char[] array = value.toCharArray();
+        int size = array.length;
+        int start = 0;
+        int end = size - 1;
+        int count = 0;
+
+        while (start < end) {
+            if(array[start] == array[end]) {
+                start++; // Move Pointer to Right
+                end--; // Move Pointer to Left
+            }
+            else {
+                count++; // Increment Count
+                start = 0; // Reset Start Count
+                end = size - count - 1; // Reset End Count With Subtracting Of Count
+            }
+        }
+
+        return count;
+    }
+}
+
+Output :
+Count Required for Palindrome = 5
+
+Time complexity of this algorithm is O(n), where n is the length of the input string.
+Space complexity is O(1), since the algorithm uses only constant extra space.
+
+---------------------------------------XXX-----------------------------------------------
+
+Que 6: Valid Anagram
+Problem Statement : Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+                    An Anagram is a word or phrase formed by rearranging the letters of a different word
+                    or phrase, typically using all the original letters exactly once.
+Link : https://leetcode.com/problems/valid-anagram/
+Solution : https://leetcode.com/problems/valid-anagram/solutions/3687854/3-method-s-c-java-python-beginner-friendly/
+
+Approach 1: Sorting
+Explanation:
+1.  sort(s.begin(), s.end()); sorts the characters in string s in ascending order. This rearranges
+    the characters in s so that they are in alphabetical order.
+2.  sort(t.begin(), t.end()); sorts the characters in string t in ascending order. Similarly, this
+    rearranges the characters in t to be in alphabetical order.
+3.  return s == t; compares the sorted strings s and t using the equality operator (==). If the
+    sorted strings are equal, it means that the original strings s and t have the same characters
+    in the same order, indicating that they are anagrams. In this case, the function returns true.
+    Otherwise, if the sorted strings are not equal, the function returns false, indicating that
+    the strings are not anagrams.
+
+This code takes advantage of the fact that anagrams have the same characters, but in different
+orders. By sorting the characters, the code transforms the problem into a comparison of the sorted
+strings, simplifying the anagram check.
+
+However, it's worth noting that this approach has a time complexity of O(n log n) due to the sorting
+operation, where n is the length of the strings.
+
+Program :
+public class CheckAnagrams {
+    public static void main(String[] args) {
+        String firstWord = "anagram";
+        String secondWord = "nagaram";
+
+        System.out.println("Check Anagrams : "+isAnagram(firstWord, secondWord));
+    }
+
+    public static boolean isAnagram(String s, String t) {
+        char[] firstArray = s.toCharArray();
+        char[] secondArray = t.toCharArray();
+
+        Arrays.sort(firstArray);
+        Arrays.sort(secondArray);
+
+        s = new String(firstArray);
+        t = new String(secondArray);
+
+        if(s.equals(t)) {
+            return true;
+        }
+        return false;
+    }
+}
+
+Output :
+Check Anagrams : true
+
+---------------------------------------XXX-----------------------------------------------
+
+Que 7 : Compare Version Numbers
+Link : https://leetcode.com/problems/compare-version-numbers/description/
+Solution :
+
+Intuition
+We can solve this problem by String.split() function.
+
+Approach
+1)  Create Array Of String By Split() Function.
+2)  Run a For Loop on the Basis Of Maximum Number (Math.max(length1, length2)).
+3)  i) Check Index is Not Available in First Array and Available in Second Array.
+    ii) Check Index is Not Available in Second Array and Available in First Array.
+    iii) If Any Condition Match with above two condition, then Check Number is Greater than 0 and return the 1 or -1 as per condition.
+    iv) If Above Two Condition are not match then we can check
+    version1 < version2 OR
+    version1 > version2
+    and Return a Result as (1 or -1).
+3) At Last No Codition match then Return Result as 0.
+
+Program
+public class CompareVersions {
+    public static void main(String[] args) {
+//      String version1 = "1.01";
+//      String version2 = "1.001";
+
+        String version1 = "1.0";
+        String version2 = "1.0.1";
+
+        System.out.println("Version Comparison : "+compareVersion(version1, version2));
+    }
+
+    public static int compareVersion(String version1, String version2) {
+        String[] arrVersion1 = version1.split("\\.");
+        String[] arrVersion2 = version2.split("\\.");
+
+        for (int i = 0; i < Math.max(arrVersion1.length, arrVersion2.length); i++) {
+            if(i >= arrVersion1.length && i <= arrVersion2.length) {
+                if(Integer.parseInt(arrVersion2[i]) > 0) {
+                    return -1;
+                }
+            }
+            else if(i >= arrVersion2.length && i <= arrVersion1.length) {
+                if(Integer.parseInt(arrVersion1[i]) > 0) {
+                    return 1;
+                }
+            }
+            else {
+                if(Integer.parseInt(arrVersion1[i]) > Integer.parseInt(arrVersion2[i])) {
+                    return 1;
+                }
+                else if(Integer.parseInt(arrVersion1[i]) < Integer.parseInt(arrVersion2[i])) {
+                    return -1;
+                }
+            }
+        }
+
+        return 0;
+    }
+}
+
+Output :
+Version Comparison : -1
+
+Complexity
+Time complexity:
+The time Complexity is O(n).
+
+Space complexity:
+The Space Complexity is O(n).
+
+---------------------------------------XXX-----------------------------------------------
