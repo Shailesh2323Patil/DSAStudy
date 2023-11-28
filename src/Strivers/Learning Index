@@ -2,6 +2,7 @@ Sorting :
 =========
 MergeSort - Done
 
+--------------------XX--------------------
 
 Array :
 =======
@@ -69,6 +70,7 @@ DP :
 ====
 Grid Unique Paths
 
+--------------------XX--------------------
 
 String :
 ========
@@ -103,3 +105,52 @@ KMP algo / LPS(pi) array
 
 Count and say
 
+--------------------XX--------------------
+
+
+LinkedList
+==========
+
+Easy:
+-----
+Reverse a LinkedList : Done
+
+Find the middle of LinkedList : Done
+
+Merge two sorted Linked List : Done
+
+Find intersection point of Y LinkedList : Done
+
+Detect a cycle in Linked List : Done
+
+Check if a LinkedList is palindrome or not
+
+Remove Duplicate from Sorted array
+
+Max consecutive ones
+
+Medium:
+-------
+Remove N-th node from back of LinkedList
+
+Add two numbers as LinkedList
+
+Delete a given Node when a node is given.
+
+Find the starting point of the Loop of LinkedList
+
+Flattening of a LinkedList
+
+Rotate a LinkedList
+
+Clone a Linked List with random and next pointer
+
+3 sum
+
+
+Hard:
+-----
+Reverse a LinkedList in groups of size k.
+Trapping Rainwater
+
+--------------------XX--------------------
