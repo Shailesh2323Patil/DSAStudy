@@ -840,3 +840,398 @@ Space Complexity: O(1)
 Reason: No extra data structure is used.
 
 --------------------------------- XX ---------------------------------
+
+Que 5 : Check if given Linked List is Plaindrome
+Problem Statement: Given the head of a singly linked list, return true if it is a palindrome.
+Level : Easy
+Link : https://takeuforward.org/data-structure/check-if-given-linked-list-is-plaindrome/
+
+Example 1:
+Input: head = [1,2,3,3,2,1]
+Output: true
+Explanation: If we read elements from left to right, we get [1,2,3,3,2,1]. When we read elements
+from right to left, we get [1,2,3,3,2,1]. Both ways list remains same and hence, the given
+linked list is palindrome.
+
+Example 2:
+Input: head = [1,2]
+Output: false
+Explanation: When we read elements from left to right, we get [1,2]. Reading from right to left,
+we get a list as [2,1]. Both are different and hence, the given linked list is not palindrome.
+
+BruteForce Approach :
+---------------------
+
+Solution: Using the extra data structure
+
+Approach:
+We can store elements in an array. Then check if the given array is a palindrome. How to check
+if an array is a palindrome?
+
+Let’s take a string, say “level” which is a palindrome. Let’s observe a thing.
+
+// Image
+
+So we can see that each index letter is the same as (length-each index -1) letter.
+
+The same logic required to check an array is a palindrome.
+
+Following are the steps to this approach.
+
+1. Iterate through the given list to store it in an array.
+2. Iterate through the array.
+3. For each index in range of n/2 where n is the size of the array
+4. Check if the number in it is the same as the number in the n-index-1 of the array.
+
+Program :
+
+public class BruteForceApproach {
+
+    static ListNode insertNode(int val, ListNode head) {
+        ListNode newNode = new ListNode(val);
+        if(head == null) {
+            head = newNode;
+            return head;
+        }
+
+        ListNode temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+        temp.next = newNode;
+
+        return head;
+    }
+
+    static void printNode(ListNode head) {
+        while (head.next != null) {
+            System.out.print(head.val+"->");
+            head = head.next;
+        }
+        System.out.println(head.val);
+    }
+
+    static boolean isPalindrome(ListNode head) {
+        ArrayList arrayList = new ArrayList();
+        while (head != null) {
+            arrayList.add(head.val);
+            head = head.next;
+        }
+
+        for (int i = 0; i < arrayList.size()/2; i++) {
+            if(arrayList.get(i) != arrayList.get(arrayList.size() - i - 1)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    public static void main(String[] args) {
+        ListNode head = null;
+
+        head = insertNode(1, head);
+        head = insertNode(2, head);
+        head = insertNode(3, head);
+        head = insertNode(2, head);
+        head = insertNode(1, head);
+
+        printNode(head);
+
+        Boolean isPalindrome = isPalindrome(head);
+
+        if(isPalindrome) {
+            System.out.println("Node is Palindrome");
+        }
+        else {
+            System.out.println("Node is not Palindrome");
+        }
+    }
+}
+
+Output :
+1->2->3->2->1
+Node is Palindrome
+
+Time Complexity: O(N)
+Reason: Iterating through the list to store elements in the array.
+
+Space Complexity: O(N)
+Reason: Using an array to store list elements for further computations.
+
+
+Optimized Solution :
+--------------------
+
+Approach:
+
+Following are the steps to this approach:-
+
+1. Find the middle element of the linked list. Refer to this article to know the steps
+   https://takeuforward.org/data-structure/find-middle-element-in-a-linked-list/
+2. Reverse a linked list from the next element of the middle element. Refer to this article
+   to know the steps https://takeuforward.org/data-structure/reverse-a-linked-list/
+3. Iterate through the new list until the middle element reaches the end of the list.
+4. Use a dummy node to check if the same element exists in the linked list from the middle element.
+
+// Image
+
+Program :
+
+public class OptimalApproach {
+
+    static ListNode insertNode(int val, ListNode head) {
+        ListNode newNode = new ListNode(val);
+        if(head == null) {
+            head = newNode;
+            return head;
+        }
+
+        ListNode temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+        temp.next = newNode;
+        return head;
+    }
+
+    static void printList(ListNode head) {
+        while (head != null) {
+            System.out.print(head.val+"->");
+            head = head.next;
+        }
+    }
+
+    static ListNode reverse(ListNode ptr) {
+        ListNode pre = null;
+        ListNode nex = null;
+
+        while (ptr != null) {
+            nex = ptr.next;
+            ptr.next = pre;
+            pre = ptr;
+            ptr = nex;
+        }
+
+        return pre;
+    }
+
+    static boolean isPalindrome(ListNode head) {
+        if(head == null && head.next == null) {
+            return true;
+        }
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        slow.next = reverse(slow.next);
+        slow = slow.next;
+
+        ListNode dummy = head;
+
+        while (slow != null) {
+            if(dummy.val != slow.val) {
+                return false;
+            }
+            dummy = dummy.next;
+            slow = slow.next;
+        }
+
+        return true;
+    }
+
+    public static void main(String[] args) {
+        ListNode head = null;
+
+        head = insertNode(1, head);
+        head = insertNode(2, head);
+        head = insertNode(3, head);
+        head = insertNode(2, head);
+        head = insertNode(1, head);
+
+        printList(head);
+        System.out.println("");
+
+        if(isPalindrome(head) == true) {
+            System.out.println("True");
+        }
+        else {
+            System.out.println("False");
+        }
+    }
+}
+
+Output :
+1->2->3->2->1
+True
+
+Time Complexity: O(N/2)+O(N/2)+O(N/2)
+Reason: O(N/2) for finding the middle element, reversing the list from the middle element, and
+traversing again to find palindrome respectively.
+
+Space Complexity: O(1)
+Reason: No extra data structures are used.
+
+--------------------------------- XX ---------------------------------
+
+Que 6 : Remove N-th node from the end of a Linked List
+Problem Statement: Given a linked list, and a number N. Find the Nth node from the end of this linked list and delete it. Return the head of the new modified linked list.
+Level : Medium
+Link : https://takeuforward.org/data-structure/remove-n-th-node-from-the-end-of-a-linked-list/
+
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
+
+Explanation: Refer Below Image
+
+// Image
+
+Input: head = [7,6,9,4,13,2,8], n = 6
+
+Output: [7,9,4,13,2,8]
+
+Explanation: Refer Below Image
+
+// Image
+
+Input: head = [1,2,3], n = 3
+
+Output: [2,3]
+
+Solution 2: [Efficient] Two pointer Approach
+
+Unlike the above approach, we don’t have to maintain the count value, we can find the nth node just by one traversal
+by using two pointer approach.
+
+Intuition :
+
+What if we had to modify the same above approach to work in just one traversal? Let’s see what all information
+we have here:
+
+1. We have the flexibility of using two-pointers now.
+2. We know, that the n-th node from the end is the same as (total nodes – n)th node from start.
+3. But, we are not allowed to calculate total nodes, as we can do only one traversal.
+
+What if, one out of the two-pointers is at the nth node from start instead of the end? Will it make anything easier
+for us?
+
+Yes, with two pointers in hand out of which one is at the n-th node from start, we can just advance both of them
+till the end simultaneously, once the faster reaches the end, the slower will stand at the n-th node from the end.
+
+Approach :
+
+1. Take two dummy nodes, who’s next will be pointing to the head.
+2. Take another node to store the head, initially,s a dummy node(start), and the next node will be pointing
+to the head. The reason why we are using this extra dummy node is that there is an edge case. If the node
+is equal to the length of the LinkedList, then this slow will point to slow’s next→ next. And we can say
+our dummy start node will be broken and will be connected to the slow next→ next.
+3. Start traversing until the fast pointer reaches the nth node.
+
+// Image
+
+4. Now start traversing by one step both of the pointers until the fast pointers reach the end.
+
+// Image
+
+When the traversal is done, just do the deleting part. Make slow pointers next to the next of the slow pointer
+to ignore/disconnect the given node.
+
+// Image
+
+6. Last, return to the next start.
+
+Dry Run:  We will be taking the first example for the dry run, so, the LinkedList is [1,2,3,4,5] and the node
+which has to be deleted is 2 from the last. For the first time, fast ptr starts traversing from node 1 and
+reaches 2, as it traverses for node number 2, then the slow ptr starts increasing one, and as well as the fast
+ptr until it reaches the end.
+
+* 1st traversal : fast=3, slow=1
+* 2nd traversal : fast=4, slow=2
+* 3rd traversal : fast=5, slow=3
+
+Now, the slow->next->next will be pointed to the slow->next
+
+So , the new linked list will be [1,2,3,5]
+
+Program :
+
+public class RemoveNthNodeFromEndOfLinkedList {
+
+    static ListNode insertNode(int val, ListNode head) {
+        ListNode newNode = new ListNode(val);
+
+        if(head == null) {
+            head = newNode;
+            return head;
+        }
+
+        ListNode temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+        temp.next = newNode;
+
+        return head;
+    }
+
+    static void printList(ListNode head) {
+        while (head.next != null) {
+            System.out.print(head.val+"->");
+            head = head.next;
+        }
+        System.out.println(head.val);
+    }
+
+    public static void main(String[] args) {
+        ListNode head = null;
+        head = insertNode(1, head);
+        head = insertNode(2, head);
+        head = insertNode(3, head);
+        head = insertNode(4, head);
+        head = insertNode(5, head);
+        head = insertNode(6, head);
+
+        int n = 3;
+        System.out.println("Remove "+n+"th Node from the End");
+        printList(removeNthNode(head, n));
+    }
+
+    static ListNode removeNthNode(ListNode head, int n) {
+        ListNode start = new ListNode();
+        start.next = head;
+
+        ListNode slow = start;
+        ListNode fast = start;
+
+        for (int i = 1; i <= n; i++) {
+            fast = fast.next;
+        }
+
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        slow.next = slow.next.next;
+
+        return start.next;
+    }
+}
+
+
+Output :
+1->2->3->4->5->6
+Remove 3th Node from the End
+1->2->3->5->6
+
+Time Complexity: O(N)
+Space Complexity: O(1)
+
+--------------------------------- XX ---------------------------------

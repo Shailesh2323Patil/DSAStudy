@@ -3,7 +3,7 @@ package Strivers.linkedList.Easy.FindIntersectionOfTwoList;
 import Strivers.linkedList.model.ListNode;
 
 
-public class OptimisedApproach {
+public class OptimalApproach {
 
     static ListNode insertNode(ListNode head, int val) {
         ListNode newNode = new ListNode(val);
