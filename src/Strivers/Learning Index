@@ -145,7 +145,7 @@ Rotate a LinkedList : Done
 
 Clone a Linked List with random and next pointer : Done
 
-3 sum : Pending in Self Notes : Pending in Self Notes : Pending in Self Notes
+3 sum : Done
 
 
 Hard:
@@ -154,3 +154,82 @@ Reverse a LinkedList in groups of size k.
 Trapping Rainwater
 
 --------------------XX--------------------
+
+Recursion :
+==========
+
+Easy:
+-----
+Subset Sums
+
+Medium:
+-------
+Subset-II
+Combination sum-1
+Combination sum-2
+Palindrome Partitioning
+Print all permutations of a string/array
+M Coloring Problem
+Rat in a Maze
+Word Break (print all ways)
+
+Hard:
+-----
+K-th permutation Sequence
+N queens Problem
+Sudoko Solver
+
+--------------------XX--------------------
+
+Stack and Queue
+===============
+
+Easy
+----
+Implement Stack using Arrays : Pending From Notes
+Implement Queue using Arrays : Pending From Notes
+Implement Stack using single Queue : Pending From Notes
+Implement Queue using Stack : Pending From Notes
+Check for balanced parentheses : Pending From Notes
+Next Greater Element
+Sort a Stack
+Next Smaller Element
+
+Medium
+------
+LRU cache (IMPORTANT)
+Implement Min Stack
+
+Hard
+----
+LFU cache
+Largest rectangle in a histogram
+Sliding Window maximum
+Rotten Orange (Using BFS)
+Stock span problem
+Find the maximum of minimums of every wind…
+The Celebrity Problem
+
+--------------------XX--------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

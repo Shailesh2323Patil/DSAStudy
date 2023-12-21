@@ -1,0 +1,872 @@
+Stack
+=====
+
+Que 1 : Implement Stack using Array
+Problem Statement:  Implement a stack using an array.
+Level : Easy
+Link : https://takeuforward.org/data-structure/implement-stack-using-array/
+
+Example :
+// Image
+
+Explanation:
+push(): Insert the element in the stack.
+pop(): Remove and return the topmost element of the stack.
+top(): Return the topmost element of the stack
+size(): Return the number of remaining elements in the stack.
+
+Solution
+
+Intuition: As we know stack works on the principle of last in first out, so we have to put elements in an
+array such that it keeps track of the most recently inserted element. Hence we can think of using a Top
+variable which will help in keeping track of recent elements inserted in the array.
+
+Approach:
+
+* Declare an array of particular size.
+* Define a variable “Top” and initialize it as -1.
+* push(x): insert element is the array by increasing top by one.
+* pop(): check whether top is not equal to -1 if it is so, return top and decrease its value by one.
+* size(): return top+1.
+
+// Image
+
+public class StackUsingArray {
+    public static void main(String[] args) {
+        Stack s = new Stack();
+        s.push(6);
+        s.push(3);
+        s.push(7);
+        System.out.println("Top of the stack before deleting any element " + s.top());
+        System.out.println("Size of the stack before deleting any element " + s.size());
+        System.out.println("The element deleted is " + s.pop());
+        System.out.println("Size of the stack after deleting an element " + s.size());
+        System.out.println("Top of the stack after deleting an element " + s.top());
+    }
+}
+
+public class Stack {
+    int size = 10000;
+
+    int top = -1;
+    int[] array = new int[size];
+
+    public void push(int data) {
+        top++;
+        array[top] = data;
+    }
+
+    public int pop() {
+        int x = array[top];
+        top--;
+        return x;
+    }
+
+    public int top() {
+        return array[top];
+    }
+
+    public int size() {
+        return top + 1;
+    }
+}
+
+Output :
+Top of the stack before deleting any element 7
+Size of the stack before deleting any element 3
+The element deleted is 7
+Size of the stack after deleting an element 2
+Top of the stack after deleting an element 3
+
+Time Complexity: O(N)
+Space Complexity: O(N)
+
+--------------------------------- XX ---------------------------------
+
+Que 2 : Implement Queue Using Array
+Problem Statement:   Implement Queue Data Structure using Array with all functions like pop, push, top, size, etc.
+Level : Easy
+Link : https://takeuforward.org/data-structure/implement-queue-using-array/
+
+Example :
+Input: push(4)
+       push(14)
+       push(24)
+       push(34)
+       top()
+       size()
+       pop()
+
+Output:
+
+The element pushed is 4
+The element pushed is 14
+The element pushed is 24
+The element pushed is 34
+The peek of the queue before deleting any element 4
+The size of the queue before deletion 4
+The first element to be deleted 4
+The peek of the queue after deleting an element 14
+The size of the queue after deleting an element 3
+
+Solution :
+
+Intuition:
+
+The intuition is to fill the array in a circular manner, (ie) after popping from the front, rather than moving all
+the elements towards the front. We can have 2 variables to keep track of the start and end indexes of the sequence.
+Mod addition is done to handle boundary conditions.
+
+
+Approach:
+
+The basic approach is to maintain two variables to point to the START and END of the filled elements in the
+array. START pointer is used to point to the starting index of the elements and the same case for the END
+pointer(ending index). Initially, both have value -1(indicating empty queue).
+
+First, let’s see the implementation of the push function. Push basically inserts a new element at the end.
+So only the END variable is going to be incremented.
+
+Corner case 1: What if we have no empty places in the array? So, first check that, if we don’t have we exit,
+in the other case we increment the START variable and put the new element.
+
+Corner case 2: What if END reaches the last index? We are doing mod with addition. So, END goes back to index 0([0-(n-1)]
+will always be the range for END).
+
+Second, let us see the pop function. In Queue pop removes and returns the front element. So, START needs to be modified.
+The general approach is to copy the current element pointed by START and increase the START variable to the next index.
+
+Corner case 3: What if the Queue is empty? That’s why we are checking the START variable. If it is -1, then the queue
+is empty, we just exit.
+
+Corner case 4: What if START goes out of bound? As done for END, mod addition comes to the rescue.
+
+Corner case 5: What happens after popping the last element? We check this state with the currSize variable. Queue returns
+to the initial state, both START and END are set to -1.
+
+Third, let’s see the top function. It behaves more like a pop function. We need to return the element pointed by the START
+variable. Since we are not actually removing any element, it’s fine to ignore corner cases 4 and 5.
+
+That’s all about the Queue class implementation. In the main function, we just initialize the Queue class to check all
+corner cases.
+
+Program :
+
+public class QueueUsingArray {
+    public static void main(String[] args) {
+        Queue q = new Queue(4);
+        q.push(4);
+        q.push(14);
+        q.push(24);
+        q.push(34);
+        System.out.println("The peek of the queue before deleting any element " + q.top());
+        System.out.println("The size of the queue before deletion " + q.size());
+        System.out.println("The first element to be deleted " + q.pop());
+        System.out.println("The peek of the queue after deleting an element " + q.top());
+        System.out.println("The size of the queue after deleting an element " + q.size());
+    }
+}
+
+public class Queue {
+    private int[] arr;
+    private int start, end, currSize, maxSize;
+
+    public Queue() {
+        arr = new int[16];
+        start = -1;
+        end = -1;
+        currSize = 0;
+        maxSize = 16;
+    }
+
+    public Queue(int maxSize) {
+        this.maxSize = maxSize;
+        arr = new int[maxSize];
+        start = -1;
+        end = -1;
+        currSize = 0;
+    }
+
+    public void push(int data) {
+        if(currSize == maxSize) {
+            System.out.println("Queue is Full\nExiting");
+            System.exit(1);
+        }
+        if(end == -1) {
+            start = 0;
+            end = 0;
+        }
+        else {
+            end = (end + 1) % maxSize;
+        }
+
+        arr[end] = data;
+        System.out.println("The element you pushed is : "+data);
+
+        currSize++;
+    }
+
+    public int pop() {
+        if(currSize == 0) {
+            System.out.println("Queue is Empty\nExiting");
+            System.exit(1);
+        }
+
+        int data = arr[start];
+        if(currSize == 1) {
+            start = -1;
+            end = -1;
+        }
+        else {
+            start = (start + 1) % maxSize;
+        }
+
+        currSize--;
+        return data;
+    }
+
+    public int top() {
+        if(currSize == 0) {
+            System.out.println("Queue is Empty\nExiting");
+            System.exit(1);
+        }
+
+        return arr[start];
+    }
+
+    public int size() {
+        return currSize;
+    }
+}
+
+Output :
+The element you pushed is : 4
+The element you pushed is : 14
+The element you pushed is : 24
+The element you pushed is : 34
+The peek of the queue before deleting any element 4
+The size of the queue before deletion 4
+The first element to be deleted 4
+The peek of the queue after deleting an element 14
+The size of the queue after deleting an element 3
+
+Time Complexity:
+pop function: O(1)
+push function: O(1)
+top function: O(1)
+size function: O(1)
+
+Space Complexity:
+Whole Queue: O(n)
+
+--------------------------------- XX ---------------------------------
+
+Que 3 : Implement Stack using single Queue
+Problem Statement:  Implement a Stack using a single Queue.
+Level : Easy
+Link : https://takeuforward.org/data-structure/implement-stack-using-single-queue/
+
+Note: Stack is a data structure that follows the Last In First Out (LIFO) rule.
+Note: Queue is a data structure that follows the First In First Out (FIFO) rule.
+
+Example:
+
+// Image
+
+Solution:
+
+Intuition: As we know stack follows last in first out, which means we get the most recently inserted
+element whenever we remove an element from the stack. But queue follows first in first out, it means we
+get that element which we inserted in the starting at each deletion, it means if we want to use the queue
+like a stack we have to arrange elements in the queue such that we get the most recent element at each deletion.
+
+Approach:
+
+* Take a single queue.
+* push(x): Push the element in the queue.
+* Use a for loop of size()-1, remove element from queue and again push back to the queue, hence the most recent
+  element becomes the most former element and vice versa.
+* pop(): remove the element from the queue.
+* top(): show the element at the top of the queue.
+* size(): size of the current queue.
+
+// Image
+
+Program :
+
+public class StackUsingQueue {
+    Queue<Integer> queue = new LinkedList<Integer>();
+
+    public static void main(String[] args) {
+        StackUsingQueue s = new StackUsingQueue();
+        s.push(3);
+        s.push(2);
+        s.push(4);
+        s.push(1);
+        System.out.println("Top of the stack: " + s.top());
+        System.out.println("Size of the stack before removing element: " + s.size());
+        System.out.println("The deleted element is: " + s.pop());
+        System.out.println("Top of the stack after removing element: " + s.top());
+        System.out.println("Size of the stack after removing element: " + s.size());
+    }
+
+    public void push(int data) {
+        queue.add(data);
+        for (int i = 0; i < queue.size() - 1; i++) {
+            queue.add(queue.remove());
+        }
+    }
+
+    public int pop() {
+        return queue.poll();
+    }
+
+    public int top() {
+        return queue.peek();
+    }
+
+    public int size() {
+        return queue.size();
+    }
+}
+
+Output :
+Top of the stack: 1
+Size of the stack before removing element: 4
+The deleted element is: 1
+Top of the stack after removing element: 4
+Size of the stack after removing element: 3
+
+Time Complexity: O(N)
+Space Complexity: O(N)
+
+--------------------------------- XX ---------------------------------
+
+Que 4 : Implement Queue using Stack
+Problem Statement:  Given a Stack having some elements stored in it. Can you implement a
+                    Queue using the given Stack?
+Level : Easy
+Link : https://takeuforward.org/data-structure/implement-queue-using-stack/
+
+Queue: A Queue is a linear data structure that works on the basis of FIFO(First in First out).
+This means the element added at first will be removed first from the Queue.
+
+Solution 1: Using two Stacks where push operation is O(N)
+
+Approach:
+
+// image
+
+push(x) ->
+
+// image
+
+pop()->
+
+// image
+
+top()->
+
+// image
+
+size()->
+
+size() operation is for returning the size of a queue which can be done by using the function Stack1.
+size(). It will actually return the total number of elements in the queue.
+
+program :
+public class QueueUsingStack {
+    private Stack<Integer> input = new Stack<Integer>();
+    private Stack<Integer> output = new Stack<Integer>();
+
+    public void push(int data) {
+        while (input.empty() == false) {
+            output.push(input.pop());
+        }
+
+        System.out.println("The element pushed is " + data);
+        input.push(data);
+
+        while (output.empty() == false) {
+            input.push(output.pop());
+        }
+    }
+
+    public int pop() {
+        if(input.empty() == true) {
+            System.out.println("Queue is Empty");
+            System.exit(1);
+        }
+
+        int val = input.pop();
+        return val;
+    }
+
+    public int peek() {
+        if(input.empty() == true) {
+            System.out.println("Queue is Empty");
+            System.exit(1);
+        }
+
+        int val = input.peek();
+        return val;
+    }
+
+    public int size() {
+        return input.size();
+    }
+
+    public static void main(String[] args) {
+        QueueUsingStack q = new QueueUsingStack();
+        q.push(3);
+        q.push(4);
+        System.out.println("The element poped is " + q.pop());
+        q.push(5);
+        System.out.println("The top element is " + q.peek());
+        System.out.println("The size of the queue is " + q.size());
+    }
+}
+
+Output :
+The element pushed is 3
+The element pushed is 4
+The element poped is 3
+The element pushed is 5
+The top element is 4
+The size of the queue is 2
+
+Time Complexity: O(N)
+Space Complexity: O(2N)
+
+Solution 2: Using two Stacks where push operation is O(1)
+
+Approach :
+
+Push()->
+
+// Image
+
+Pop()->
+
+// Image
+
+top()->
+
+// Image
+
+Size():
+
+// Image
+
+Program :
+
+public class QueueUsingStack2 {
+    public Stack<Integer> input = new Stack<Integer>();
+    public Stack<Integer> output = new Stack<Integer>();
+
+    public void push(int data) {
+        input.push(data);
+        System.out.println("The Element is Pushed "+data);
+    }
+
+    public int pop() {
+        if(input.empty() && output.empty()) {
+            System.out.println("Queue is Empty");
+            System.exit(1);
+        }
+
+        if(output.empty()) {
+            while (input.empty() == false) {
+                output.push(input.pop());
+            }
+        }
+
+        int x = output.pop();
+        return x;
+    }
+
+    public int peek() {
+        if(input.empty() && output.empty()) {
+            System.out.println("Queue is Empty");
+            System.exit(1);
+        }
+
+        if(output.empty()) {
+            while (input.empty() == false) {
+                output.push(input.pop());
+            }
+        }
+
+        int x = output.peek();
+        return x;
+    }
+
+    public int size() {
+        return input.size() + output.size();
+    }
+
+    public static void main(String[] args) {
+        QueueUsingStack2 q = new QueueUsingStack2();
+        q.push(3);
+        q.push(4);
+        System.out.println("The element poped is " + q.pop());
+        q.push(5);
+        System.out.println("The top element is " + q.peek());
+        System.out.println("The size of the queue is " + q.size());
+    }
+}
+
+Output :
+The Element is Pushed 3
+The Element is Pushed 4
+The element poped is 3
+The Element is Pushed 5
+The top element is 4
+The size of the queue is 2
+
+Time Complexity: O(1)
+Space Complexity: O(2N)
+
+--------------------------------- XX ---------------------------------
+
+Que 5 : Check for Balanced Parentheses
+Problem Statement:  Check Balanced Parentheses. Given string str containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, check if the input string is valid and return true if the string is balanced otherwise return false.
+                    Note: string str is valid if:
+                    Open brackets must be closed by the same type of brackets.
+                    Open brackets must be closed in the correct order.
+Level : Easy
+Link : https://takeuforward.org/data-structure/check-for-balanced-parentheses/
+
+Example 1:
+Input: str = “( )[ { } ( ) ]”
+Output: True
+
+Explanation: As every open bracket has its corresponding
+close bracket. Match parentheses are in correct order
+hence they are balanced.
+
+Example 2:
+Input: str = “[ ( )”
+Output: False
+
+Explanation: As ‘[‘ does not have ‘]’ hence it is
+not valid and will return false.
+
+Solution
+
+Intuition:  We have to keep track of previous as well as most recent opening brackets and also keep in mind the sequence,
+as after opening of the bracket there should be opposite pairs of brackets. Also handle the corner cases like [ ) ( ]
+where closing bracket occurs first and opening bracket after it, which is an invalid sequence, as well as [ ( ] )
+where the most recent opening didn’t get its opposite pair hence it will also not be valid.
+
+So we have to use a data structure that will keep track of first in and last out, hence we will use the stack.
+
+Approach:
+
+* Whenever we get the opening bracket we will push it into the stack. I.e ‘{‘, ’[’, ’(‘.
+* Whenever we get the closing bracket we will check if the stack is non-empty or not.
+* If the stack is empty we will return false, else if it is nonempty then we will check if the topmost element of the
+stack is the opposite pair of the closing bracket or not.
+* If it is not the opposite pair of the closing bracket then return false, else move ahead.
+* After we move out of the string the stack has to be empty if it is non-empty then return it as invalid else it is a
+valid string.
+
+Program :
+
+public class CheckedForBalancedParentheses {
+    public static void main(String[] args) {
+        String s="()[{}()]";
+        if(isValid(s)==true) {
+            System.out.println("True");
+        }
+        else {
+            System.out.println("False");
+        }
+    }
+
+    public static boolean isValid(String str) {
+        Stack<Character> stack = new Stack<Character>();
+
+        for (Character it : str.toCharArray()) {
+            if(it == '{' || it == '(' || it == '[') {
+                stack.push(it);
+            }
+            else {
+                if(stack.empty()) {
+                    return false;
+                }
+                Character last = stack.pop();
+
+                if( it == '}' && last == '{'
+                    || it == ')' && last == '('
+                    || it == ']' && last == '[')
+                {
+                    continue;
+                }
+
+                return false;
+            }
+        }
+
+        return stack.empty();
+    }
+}
+
+Output :
+True
+
+Time Complexity: O(N)
+Space Complexity: O(N)
+
+--------------------------------- XX ---------------------------------
+
+Que 6 : Next Greater Element Using Stack
+Problem Statement:  Given a circular integer array A, return the next greater element for every
+element in A. The next greater element for an element x is the first element greater than x that
+we come across while traversing the array in a clockwise manner. If it doesn’t exist, return -1
+for this element.
+Level : Easy
+Link : https://takeuforward.org/data-structure/next-greater-element-using-stack/
+
+Example 1:
+
+Input: N = 11, A[] = {3,10,4,2,1,2,6,1,7,2,9}
+Output: 10,-1,6,6,2,6,7,7,9,9,10
+Explanation: For the first element in A ,i.e, 3, the greater element which comes next to it while traversing and
+is closest to it is 10. Hence,10 is present on index 0 in the resultant array. Now for the second element,i.e, 10,
+there is no greater number and hence -1 is it’s next greater element (NGE). Similarly, we got the NGEs for all other
+elements present in A.
+
+Example 2:
+Input:  N = 6, A[] = {5,7,1,7,6,0}
+Output: 7,-1,7,-1,7,5
+
+Solution
+
+Approach:
+
+This problem can be solved easily and efficiently by using the stack data structure as it is based on
+the Last in First out (LIFO) principle.
+
+To make it a bit easier let’s first try to solve without considering the array as circular. To find the
+next greater element we start traversing the given array from the right. As for the rightmost element,
+there is no other element at its right. Hence, we assign -1 at its index in the resultant array. Since
+this can be the next greater element (NGE) for some other element, we push it in the stack S. We keep
+checking for other elements. Let’s say we are checking for an element at index i. We keep popping from
+the stack until the element at the top of the stack is smaller than A[i]. The main intuition behind popping
+them is that these elements can never be the NGE for any element present at the left of A[i] because A[i]
+is greater than these elements. Now, if the top element of S is greater than A[i] then this is NGE of A[i]
+and we will assign it to res[i], where res is the resultant array. If the stack becomes empty then it implies
+that no element at the right of A[i] is greater than it and we assign -1. At last, we push A[i] in S.
+
+Dry run: Let’s apply this algorithm for A[] = {5,7,1,2,6,0}:
+
+// Image
+
+So, the resultant array is {7,-1,2,6,-1,-1}. Remember that we have considered the array to be non-circular.
+For a circular array, the resultant array should be {7,-1,2,6,7,5}.
+
+Now we need to make this algorithm work for a circular array. The only difference between a circular and non-circular
+array is that while searching for the next greater element in a non-circular array we don’t consider the elements
+left to the concerned element. This can be easily done by inserting the elements of the array A at the end of A,
+thus making its size double. But we actually don’t require any extra space. We can just traverse the array twice.
+We actually run a loop 2*N times, where N is the size of the given array.
+
+Program :
+
+public class NextGreaterElementTUF {
+    public static void main(String[] args) {
+        int arr[]={5,7,1,2,6,0};
+
+        int arr2[] = nextGreaterElements(arr);
+        System.out.println("The next greater elements are ");
+        for (int i = 0; i < arr2.length; i++) {
+            System.out.print(arr2[i] + " ");
+        }
+    }
+
+    public static int[] nextGreaterElements(int[] nums) {
+        int n = nums.length;
+        int[] nge = new int[nums.length];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 2 * n - 1; i >= 0; i--) {
+            while (stack.empty() == false && stack.peek() <= nums[i % n]) {
+                stack.pop();
+            }
+
+            if(i < n) {
+                if(stack.empty() == false) {
+                    nge[i] = stack.peek();
+                }
+                else {
+                    nge[i] = -1;
+                }
+            }
+
+            stack.push(nums[i % n]);
+        }
+
+        return nge;
+    }
+}
+
+
+Output :
+The next greater elements are
+7 -1 2 6 7 5
+
+Time Complexity: O(N)
+Space Complexity: O(N)
+
+Example From LeetCode :
+-----------------------
+
+Next Greater Element I
+The next greater element of some element x in an array is the first greater element that is to the right of x in the same array.
+
+You are given two distinct 0-indexed integer arrays nums1 and nums2, where nums1 is a subset of nums2.
+
+For each 0 <= i < nums1.length, find the index j such that nums1[i] == nums2[j] and determine the next greater element of
+nums2[j] in nums2. If there is no next greater element, then the answer for this query is -1.
+
+Return an array ans of length nums1.length such that ans[i] is the next greater element as described above.
+
+Example 1:
+Input: nums1 = [4,1,2], nums2 = [1,3,4,2]
+Output: [-1,3,-1]
+Explanation: The next greater element for each value of nums1 is as follows:
+- 4 is underlined in nums2 = [1,3,4,2]. There is no next greater element, so the answer is -1.
+- 1 is underlined in nums2 = [1,3,4,2]. The next greater element is 3.
+- 2 is underlined in nums2 = [1,3,4,2]. There is no next greater element, so the answer is -1.
+
+Example 2:
+Input: nums1 = [2,4], nums2 = [1,2,3,4]
+Output: [3,-1]
+Explanation: The next greater element for each value of nums1 is as follows:
+- 2 is underlined in nums2 = [1,2,3,4]. The next greater element is 3.
+- 4 is underlined in nums2 = [1,2,3,4]. There is no next greater element, so the answer is -1.
+
+Brute Force :
+-------------
+
+Approach:
+There are two common approaches to solve this problem:
+
+Brute Force Approach
+The brute force approach is straightforward. For each element in nums1, iterate through nums2 to find the matching element.
+Once we find the matching element, iterate through the remaining elements in nums2 to find the next greater element. If we
+find a greater element, update the max variable. Finally, add max to the answer vector.
+
+public class NextGreaterElementLeetCodeBruteForce {
+    public static void main(String[] args) {
+        int arr[]={4,1,2};
+        int arr2[]={1,3,4,2};
+
+        int ans[] = nextGreaterElements(arr, arr2);
+        System.out.println("The next greater elements are ");
+        for (int i = 0; i < ans.length; i++) {
+            System.out.print(ans[i] + " ");
+        }
+    }
+
+    public static int[] nextGreaterElements(int[] num1, int[] num2) {
+        int max = -1;
+
+        int ans[] = new int[num1.length];
+
+        for(int i = 0; i < num1.length; i++)
+        {
+            max = -1;
+            for (int j = 0; j < num2.length; j++)
+            {
+                int index = j;
+                if(num1[i] == num2[j]) {
+                     while (index < num2.length) {
+                         if(num2[index] > num1[i]) {
+                             max = num2[index];
+                             break;
+                         }
+                         index++;
+                     }
+                }
+            }
+            ans[i] = max;
+        }
+
+        return ans;
+    }
+}
+
+Output :
+The next greater elements are
+-1 3 -1
+
+Using stack with map
+The second approach uses a stack and a map. We traverse nums2 and push each element onto the stack. If the current element is
+greater than the top element of the stack, we pop elements from the stack and add them to the map with the current element as
+the value. Once we finish traversing nums2, we iterate through nums1 and check if each element has a next greater element in
+the map. If it has, we update the element in nums1 with the corresponding value in the map. Otherwise, we update the element
+in nums1 with -1.
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
+public class NextGreaterElementLeetCodeOptimalApproach {
+    public static void main(String[] args) {
+//        int arr[]={4,1,2};
+//        int arr2[]={1,3,4,2};
+
+        int arr[]={1,3,5,2,4};
+        int arr2[]={6,5,4,3,2,1,7};
+
+        int ans[] = nextGreaterElements(arr, arr2);
+        System.out.println("The next greater elements are ");
+        for (int i = 0; i < ans.length; i++) {
+            System.out.print(ans[i] + " ");
+        }
+    }
+
+    public static int[] nextGreaterElements(int[] num1, int[] num2) {
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        Stack<Integer> stack = new Stack<>();
+
+        for(int num : num2) {
+            while (!stack.empty() && stack.peek() < num) {
+                hashMap.put(stack.pop(), num);
+            }
+            stack.push(num);
+        }
+
+        for (int i = 0; i < num1.length; i++) {
+            num1[i] = hashMap.containsKey(num1[i]) ? hashMap.get(num1[i]) : -1;
+        }
+
+        return num1;
+    }
+}
+
+Output :
+The next greater elements are
+7 7 7 7 7
+
+Complexity:
+Time Complexity:
+Approach 1: Brute Force Approach
+For each element in nums1, we iterate through nums2. So, the time complexity is O(n*m), where n and m are the lengths of nums1
+and nums2, respectively.
+Approach 2: Using stack with map
+We traverse nums2 once and push each element onto the stack. So, the time complexity of this step is O(m).
+For each element in nums1, we check if it has a next greater element in the map. The time complexity of this step is O(n).
+So, the overall time complexity is O(n+m).
+
+Space Complexity:
+Approach 1: Brute Force Approach
+We use an answer vector to store the next greater elements. So, the space complexity is O(n), where n is the length of nums1.
+Approach 2: Using stack with map
+We use a stack to store the elements and a map to store the next greater elements. So, the space complexity is O(m+n), where
+m and n are the lengths of nums1 and nums2, respectively.
+
+
+--------------------------------- XX ---------------------------------
