@@ -1,7 +1,6 @@
-package Strivers.stack.Easy.NextGreaterElement;
+package Strivers.stack_queue.Easy.NextGreaterElement;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
 
 public class NextGreaterElementLeetCodeOptimalApproach {

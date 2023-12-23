@@ -1,4 +1,4 @@
-package Strivers.stack.Model;
+package Strivers.stack_queue.Model;
 
 public class Stack {
     int size = 10000;

@@ -186,19 +186,19 @@ Stack and Queue
 
 Easy
 ----
-Implement Stack using Arrays : Pending From Notes
-Implement Queue using Arrays : Pending From Notes
-Implement Stack using single Queue : Pending From Notes
-Implement Queue using Stack : Pending From Notes
-Check for balanced parentheses : Pending From Notes
-Next Greater Element
-Sort a Stack
-Next Smaller Element
+Implement Stack using Arrays : Done
+Implement Queue using Arrays : Done
+Implement Stack using single Queue : Done
+Implement Queue using Stack : Done
+Check for balanced parentheses : Done
+Next Greater Element : Done
+Next Smaller Element : Done
+Sort a Stack : Done
 
 Medium
 ------
-LRU cache (IMPORTANT)
-Implement Min Stack
+LRU cache (IMPORTANT) : Done
+Implement Min Stack : Done
 
 Hard
 ----

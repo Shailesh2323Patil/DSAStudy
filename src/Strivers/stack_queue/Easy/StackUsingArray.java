@@ -1,6 +1,6 @@
-package Strivers.stack.Easy;
+package Strivers.stack_queue.Easy;
 
-import Strivers.stack.Model.Stack;
+import Strivers.stack_queue.Model.Stack;
 
 public class StackUsingArray {
     public static void main(String[] args) {

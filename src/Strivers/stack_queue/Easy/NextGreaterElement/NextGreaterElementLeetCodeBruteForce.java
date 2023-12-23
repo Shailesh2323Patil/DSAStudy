@@ -1,6 +1,4 @@
-package Strivers.stack.Easy.NextGreaterElement;
-
-import java.util.Stack;
+package Strivers.stack_queue.Easy.NextGreaterElement;
 
 public class NextGreaterElementLeetCodeBruteForce {
     public static void main(String[] args) {

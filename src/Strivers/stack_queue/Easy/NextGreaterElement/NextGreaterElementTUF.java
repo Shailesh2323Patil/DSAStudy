@@ -1,4 +1,4 @@
-package Strivers.stack.Easy.NextGreaterElement;
+package Strivers.stack_queue.Easy.NextGreaterElement;
 
 import java.util.Stack;
 

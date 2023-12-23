@@ -1,4 +1,4 @@
-package Strivers.stack.Easy;
+package Strivers.stack_queue.Easy;
 
 
 import java.util.LinkedList;
