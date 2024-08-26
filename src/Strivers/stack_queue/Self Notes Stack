@@ -1377,8 +1377,8 @@ Space Complexity:O(1)
 
 --------------------------------- XX ---------------------------------
 
-Que 10 : Implement Min Stack : O(2N) and O(N) Space Complexity
-Problem Statement: Implement Min Stack | O(2N) and O(N) Space Complexity. Design a stack that supports push,
+Que 10 : Implement Min Stack : O(2^N) and O(N) Space Complexity
+Problem Statement: Implement Min Stack | O(2^N) and O(N) Space Complexity. Design a stack that supports push,
 pop, top, and retrieving the minimum element in constant time.
 Level : Easy
 Link BruteForce : https://takeuforward.org/data-structure/implement-min-stack-o2n-and-on-space-complexity/
@@ -1395,7 +1395,7 @@ stack < long long > st
 st.push(-2); Push element in stack
 st.push(0); Push element in stack
 st.push(-3); Push element in stack
-st.getMin(); Get minimum element fromstack
+st.getMin(); Get minimum element from stack
 st.pop(); Pop the topmost element
 st.top(); Top element is 0
 st.getMin(); Minimum element is -2
@@ -1523,7 +1523,7 @@ public class MinStackOptimal {
         }
         else {
             if(val < mini) {
-                stack.push(2*val- mini);
+                stack.push(2*val - mini);
                 mini = val;
             }
             else {
@@ -1541,7 +1541,7 @@ public class MinStackOptimal {
         long val = stack.pop();
 
         if(val < mini) {
-            mini = 2* mini - val;
+            mini = 2*mini - val;
         }
     }
 

@@ -4,7 +4,8 @@ public class ReverseWordOptimalApproach {
     public static void main(String[] args) {
         //String str = "the sky is blue";
         //String str = "  hello world  ";
-        String str = "a good   example";
+        //String str = "a good   example";
+        String str = "EPY2giL";
         System.out.println("Before reversing words: ");
         System.out.println(str);
 
@@ -45,6 +46,8 @@ public class ReverseWordOptimalApproach {
         }
 
         ans = temp + " " + ans;
+
+        ans = ans.trim();
 
         return ans;
     }

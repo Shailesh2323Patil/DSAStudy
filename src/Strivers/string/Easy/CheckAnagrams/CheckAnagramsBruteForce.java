@@ -1,7 +1,7 @@
-package Strivers.string.Easy;
+package Strivers.string.Easy.CheckAnagrams;
 
 import java.util.*;
-public class CheckAnagrams {
+public class CheckAnagramsBruteForce {
     public static void main(String[] args) {
         String firstWord = "anagram";
         String secondWord = "nagaram";
