@@ -39,7 +39,7 @@ public class OptimalApproach {
         System.out.println("Original list: ");
         printList(head);
 
-        int k = 3;
+        int k = 2;
         ListNode newHead = rotateRight(head,k);//calling function for rotating right of the nodes by k times
 
         System.out.println("After "+k+" iterations: ");
@@ -55,8 +55,8 @@ public class OptimalApproach {
         int length = 1;
 
         while (temp.next != null) {
-            length++;
             temp = temp.next;
+            length++;
         }
 
         temp.next = head;
@@ -65,13 +65,11 @@ public class OptimalApproach {
 
         int end = length - k;
 
-        while (end != 0) {
-            end--;
+        while (end-- != 0) {
             temp = temp.next;
         }
 
         head = temp.next;
-
         temp.next = null;
 
         return head;

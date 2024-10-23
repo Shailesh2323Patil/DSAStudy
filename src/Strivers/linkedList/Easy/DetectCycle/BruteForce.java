@@ -14,7 +14,9 @@ public class BruteForce {
         }
 
         ListNode temp = head;
-        while(temp.next != null) temp = temp.next;
+        while(temp.next != null) {
+            temp = temp.next;
+        }
 
         temp.next = newNode;
         return head;

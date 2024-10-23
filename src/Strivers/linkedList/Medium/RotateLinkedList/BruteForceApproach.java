@@ -45,13 +45,12 @@ public class BruteForceApproach {
     }
 
     public static ListNode rotateRight(ListNode head, int k) {
-        if(head == null || head.next == null) {
+        if(head == null || head.next == null || k == 0) {
             return head;
         }
 
         for (int i = 0; i < k; i++) {
             ListNode temp = head;
-
             while (temp.next.next != null) {
                 temp = temp.next;
             }
@@ -59,7 +58,6 @@ public class BruteForceApproach {
             ListNode end = temp.next;
             temp.next = null;
             end.next = head;
-
             head = end;
         }
 

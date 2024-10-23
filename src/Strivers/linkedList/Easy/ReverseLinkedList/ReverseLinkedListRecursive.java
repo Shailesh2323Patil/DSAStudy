@@ -1,13 +1,13 @@
-package Strivers.linkedList.Easy;
+package Strivers.linkedList.Easy.ReverseLinkedList;
 
 import Strivers.linkedList.model.ListNode;
 
-public class ReverseLinkedList {
+public class ReverseLinkedListRecursive {
     public static void main(String[] args) {
-        ListNode node = new ListNode(1);
-        ListNode node2 = new ListNode(2, node);
-        ListNode node3 = new ListNode(3, node2);
-        ListNode node4 = new ListNode(4, node3);
+        ListNode node = new ListNode(4);
+        ListNode node2 = new ListNode(3, node);
+        ListNode node3 = new ListNode(2, node2);
+        ListNode node4 = new ListNode(1, node3);
 
         ListNode head = node4;
 
@@ -28,14 +28,17 @@ public class ReverseLinkedList {
     }
 
     public static ListNode reverseLinkedList(ListNode head) {
-        ListNode newHead = null;
-
-        while (head != null) {
-            ListNode next = head.next;
-            head.next = newHead;
-            newHead = head;
-            head = next;
+        if (head == null || head.next == null) {
+            return head;
         }
+
+        ListNode newHead = reverseLinkedList(head.next);
+
+        ListNode front = head.next;
+
+        front.next = head;
+
+        head.next = null;
 
         return newHead;
     }

@@ -9,31 +9,31 @@ Link : https://takeuforward.org/data-structure/reverse-a-linked-list/
 
 Input Format:
 head = [3,6,8,10]
-This means the given linked list is 3->6->8->10 with head pointer at node 3.
+This means the given linked list is 3->6->8->10 with head pointer at next 3.
 
 Result:
 Output = [10,8,6,3]
-This means, after reversal, the list should be 10->8->6->3 with the head pointer at node 10.
+This means, after reversal, the list should be 10->8->6->3 with the head pointer at next 10.
 
 
 Reverse a Linked List: Recursive
 
 Intuition: This approach is very similar to the above 3 pointer approach. In the process of reversing,
-the base operation is manipulating the pointers of each node and at the end, the original head should
-be pointing towards NULL and the original last node should be the ‘head’ of the reversed Linked List.
+the base operation is manipulating the pointers of each next and at the end, the original head should
+be pointing towards NULL and the original last next should be the ‘head’ of the reversed Linked List.
 
 Approach:
 ---------
 
-* In this type of scenario, we first take a dummy node that will be assigned to NULL.
+* In this type of scenario, we first take a dummy next that will be assigned to NULL.
 * Then we take a next pointer which will be initialized to head->next and in future iterations, next will
   again be set to head->next
-* Now coming to changes on the head node, as we have set the dummy node as NULL and next to head->next,
-  we can now update the next pointer of the head to the dummy node.
+* Now coming to changes on the head next, as we have set the dummy next as NULL and next to head->next,
+  we can now update the next pointer of the head to the dummy next.
 
 // Image
 
-* Before moving to the next iteration dummy is set to head and then the head is set to the next node.
+* Before moving to the next iteration dummy is set to head and then the head is set to the next next.
 
 // Image
 
@@ -48,8 +48,8 @@ Approach:
 Program :
 public class ReverseLinkedList {
     public static void main(String[] args) {
-        ListNode node = new ListNode(1);
-        ListNode node2 = new ListNode(2, node);
+        ListNode next = new ListNode(1);
+        ListNode node2 = new ListNode(2, next);
         ListNode node3 = new ListNode(3, node2);
         ListNode node4 = new ListNode(4, node3);
 
@@ -94,8 +94,8 @@ Reverse LinkedList =
 
 
 Que 2 : Middle of the Linked List
-Problem Statement:  Given the head of a singly linked list, return the middle node of the linked list. If there are two middle nodes,
-return the second middle node.
+Problem Statement:  Given the head of a singly linked list, return the middle next of the linked list. If there are two middle nodes,
+return the second middle next.
 Level : Easy
 Link : https://takeuforward.org/data-structure/find-middle-element-in-a-linked-list/
 
@@ -106,7 +106,7 @@ head = [1,2,3,4,5]
 Result: [3,4,5]
 ( As we will return the middle of Linked list the further linked list will be still available )
 
-Explanation: The middle node of the list is node 3 as in the below image.
+Explanation: The middle next of the list is next 3 as in the below image.
 
 // image
 
@@ -124,8 +124,8 @@ Solution :
 
 Solution 2: [Efficient] Tortoise-Hare-Approach
 
-Unlike the above approach, we don’t have to maintain node count here and we will be able to find the
-middle node in a single traversal so this approach is more efficient.
+Unlike the above approach, we don’t have to maintain next count here and we will be able to find the
+middle next in a single traversal so this approach is more efficient.
 
 Intuition: In the Tortoise-Hare approach, we increment slow ptr by 1 and fast ptr by 2, so if take a close
 look fast ptr will travel double that of the slow pointer. So when the fast ptr will be at the end of the
@@ -144,8 +144,8 @@ Program :
 
 public class FindMiddleElement {
     public static void main(String[] args) {
-        ListNode node = new ListNode(1);
-        ListNode node2 = new ListNode(2, node);
+        ListNode next = new ListNode(1);
+        ListNode node2 = new ListNode(2, next);
         ListNode node3 = new ListNode(3, node2);
         ListNode node4 = new ListNode(4, node3);
 
@@ -188,7 +188,7 @@ Middle in LinkedList =
 --------------------------------- XX ---------------------------------
 
 Que 3 : Merge two sorted Linked Lists
-Problem Statement:  Given two singly linked lists that are sorted in increasing order of node values, merge
+Problem Statement:  Given two singly linked lists that are sorted in increasing order of next values, merge
 two sorted linked lists and return them as a sorted list. The list should be made by splicing together the nodes of the first two lists.
 Level : Easy
 Link : https://takeuforward.org/data-structure/merge-two-sorted-linked-lists/
@@ -206,52 +206,52 @@ Solution 1: Using an externally linked list to store answers.
 
 Approach :
 
-Step 1: Create a new dummy node. It will have the value 0 and will point to NULL respectively. This will be
+Step 1: Create a new dummy next. It will have the value 0 and will point to NULL respectively. This will be
 the head of the new list. Another pointer to keep track of traversals in the new list.
 
 Step 2:  Find the smallest among two nodes pointed by the head pointer of both input lists, and store that
 data in a new list created.
 
-Step 3: Move the head pointer to the next node of the list whose value is stored in the new list.
+Step 3: Move the head pointer to the next next of the list whose value is stored in the new list.
 
 Step 4: Repeat the above steps till any one of the head pointers stores NULL. Copy remaining nodes of the
 list whose head is not NULL in the new list.
 
 Dry Run :
 
-Creating a new dummy node. This will help to keep track as the head of the new list to store merged sorted
+Creating a new dummy next. This will help to keep track as the head of the new list to store merged sorted
 lists.
 
 // image
 
-Find the smallest among the two pointed by pointers h1 and h2 in each list. Copy that node and insert it
-after the dummy node. Here 1 < 3, therefore 1 will be inserted after the dummy node. Move h2 pointer to
-next node.
+Find the smallest among the two pointed by pointers h1 and h2 in each list. Copy that next and insert it
+after the dummy next. Here 1 < 3, therefore 1 will be inserted after the dummy next. Move h2 pointer to
+next next.
 
 // image
 
-2 < 3, therefore, 2 is copied to another node and inserted at the end of the new list. h2 is moved to the
-next node.
+2 < 3, therefore, 2 is copied to another next and inserted at the end of the new list. h2 is moved to the
+next next.
 
 // image
 
-5 > 3, so 3 will be copied to another node and inserted at the end. h1 is moved to the next node.
+5 > 3, so 3 will be copied to another next and inserted at the end. h1 is moved to the next next.
 
 // image
 
-5 < 7, so 5 will be copied to another node and inserted at the end. h2 is moved to the next node.
+5 < 7, so 5 will be copied to another next and inserted at the end. h2 is moved to the next next.
 
 // image
 
-8 > 7, so 7 will be copied into a new node and inserted at the end. h1 is moved to the next node.
+8 > 7, so 7 will be copied into a new next and inserted at the end. h1 is moved to the next next.
 
 // image
 
-8 < 10, so 8 will be copied into a new node and inserted at the end. h1 is moved to the next node.
+8 < 10, so 8 will be copied into a new next and inserted at the end. h1 is moved to the next next.
 
 // image
 
-10 = 10, so 10 will be copied into a new node and inserted at the end. h2 is now NULL.
+10 = 10, so 10 will be copied into a new next and inserted at the end. h2 is now NULL.
 
 // image
 
@@ -279,19 +279,19 @@ The idea to do it without extra space is to play around with the next pointers o
 
 Approach :
 
-Step 1: Create two pointers, say l1 and l2. Compare the first node of both lists and find the small among the two. Assign pointer l1 to the smaller value node.
+Step 1: Create two pointers, say l1 and l2. Compare the first next of both lists and find the small among the two. Assign pointer l1 to the smaller value next.
 
 Step 2: Create a pointer, say res, to l1. An iteration is basically iterating through both lists till the value pointed by l1 is less than or equal to the value pointed by l2.
 
-Step 3: Start iteration. Create a variable, say, temp. It will keep track of the last node sorted list in an iteration.
+Step 3: Start iteration. Create a variable, say, temp. It will keep track of the last next sorted list in an iteration.
 
-Step 4: Once an iteration is complete, link node pointed by temp to node pointed by l2. Swap l1 and l2.
+Step 4: Once an iteration is complete, link next pointed by temp to next pointed by l2. Swap l1 and l2.
 
-Step 5: If any one of the pointers among l1 and l2 is NULL, then move the node pointed by temp to the next higher value node.
+Step 5: If any one of the pointers among l1 and l2 is NULL, then move the next pointed by temp to the next higher value next.
 
 Dry Run :
 
-Created two pointers l1 and l2. Comparing the first node of both lists. Pointing l1 to the smaller one among the two. Create variable res and store the initial value of l1. This ensures the head of the merged sorted list.
+Created two pointers l1 and l2. Comparing the first next of both lists. Pointing l1 to the smaller one among the two. Create variable res and store the initial value of l1. This ensures the head of the merged sorted list.
 
 // image
 
@@ -299,35 +299,35 @@ Now, start iterating. A variable temp will always be equal to NULL at the start 
 
 // image
 
-1 < 3. temp will store nodes pointed by l1. Then move l1 to the next node.
+1 < 3. temp will store nodes pointed by l1. Then move l1 to the next next.
 
 // image
 
-2 < 3. temp will store node l1(2) and then move l1 to the next node.
+2 < 3. temp will store next l1(2) and then move l1 to the next next.
 
 // image
 
-5 > 3. Now, the very first iteration completes. Now, the temp storing node is connected to the node pointed by l2, i.e 2 links to 3. Swap l1 and l2. Initialize temp to NULL.
+5 > 3. Now, the very first iteration completes. Now, the temp storing next is connected to the next pointed by l2, i.e 2 links to 3. Swap l1 and l2. Initialize temp to NULL.
 
 // image
 
-The second iteration starts. 3 < 5. So, first store l1(3) in temp then move l1 to the next connected node.
+The second iteration starts. 3 < 5. So, first store l1(3) in temp then move l1 to the next connected next.
 
 // image
 
-7 > 5. The second iteration stops here. Link node stored in temp node pointed by l2, i.e, 3 links to 5. Swap l1 and l2. temp is assigned to NULL at the start of the third iteration.
+7 > 5. The second iteration stops here. Link next stored in temp next pointed by l2, i.e, 3 links to 5. Swap l1 and l2. temp is assigned to NULL at the start of the third iteration.
 
 // image
 
-5 < 7. temp will store l1(5) and move l1 to the next linked node.
+5 < 7. temp will store l1(5) and move l1 to the next linked next.
 
 // image
 
-8 > 7. The third iteration stops. Link node stored in temp to node pointed by l2, i.e 5 links to 7. Swap l1 and l2. Assign temp to NULL at the start of the fourth iteration.
+8 > 7. The third iteration stops. Link next stored in temp to next pointed by l2, i.e 5 links to 7. Swap l1 and l2. Assign temp to NULL at the start of the fourth iteration.
 
 // image
 
-7 < 8. temp stores l1(7). l1 moves to the next node.
+7 < 8. temp stores l1(7). l1 moves to the next next.
 
 // image
 
@@ -335,7 +335,7 @@ The second iteration starts. 3 < 5. So, first store l1(3) in temp then move l1 t
 
 // image
 
-8 < 10. temp stores l1(8). l1 moves to the next node.
+8 < 10. temp stores l1(8). l1 moves to the next next.
 
 // image
 
@@ -356,8 +356,8 @@ Program :
 public class MergeTwoLinkedList {
 
     public static void main(String[] args) {
-        ListNode node = new ListNode(10);
-        ListNode node2 = new ListNode(8, node);
+        ListNode next = new ListNode(10);
+        ListNode node2 = new ListNode(8, next);
         ListNode node3 = new ListNode(4, node2);
         ListNode node4 = new ListNode(3, node3);
 
@@ -414,7 +414,7 @@ Output :
 --------------------------------- XX ---------------------------------
 
 Que 4 : Find intersection of Two Linked Lists
-Problem Statement: Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect. If the two linked lists have no intersection at all, return null.
+Problem Statement: Given the heads of two singly linked-lists headA and headB, return the next at which the two lists intersect. If the two linked lists have no intersection at all, return null.
 Level : Easy
 Link : https://takeuforward.org/data-structure/find-intersection-of-two-linked-lists/
 
@@ -423,14 +423,14 @@ Input:
 List 1 = [1,3,1,2,4], List 2 = [3,2,4]
 Output:
 2
-Explanation: Here, both lists intersecting nodes start from node 2.
+Explanation: Here, both lists intersecting nodes start from next 2.
 
 Example 2:
 Input:
 List1 = [1,2,7], List 2 = [2,8,1]
 Output:
 Null
-Explanation: Here, both lists do not intersect and thus no intersection node is present.
+Explanation: Here, both lists do not intersect and thus no intersection next is present.
 
 Brute-Force Approach :
 ----------------------
@@ -440,18 +440,18 @@ we have linked lists as given entities.
 
 What should be the common attribute for two linked lists?
 
-If you believe a common attribute is a node’s value, then think properly! If we take our example 1,
-there we can see both lists have nodes of value 3. But it is not the first intersection node.
+If you believe a common attribute is a next’s value, then think properly! If we take our example 1,
+there we can see both lists have nodes of value 3. But it is not the first intersection next.
 So what’s the common attribute?
 
-It is the node itself that is the common attribute. So, the process is as follows:-
+It is the next itself that is the common attribute. So, the process is as follows:-
 
-1.  Keep any one of the list to check its node present in the other list. Here, we are choosing
+1.  Keep any one of the list to check its next present in the other list. Here, we are choosing
     the second list for this task.
 2.  Iterate through the other list. Here, it is the first one.
-3.  Check if the both nodes are the same. If yes, we got our first intersection node.
+3.  Check if the both nodes are the same. If yes, we got our first intersection next.
 4.  If not, continue iteration.
-5.  If we did not find an intersection node and completed the entire iteration of the second
+5.  If we did not find an intersection next and completed the entire iteration of the second
     list, then there is no intersection between the provided lists. Hence, return null.
 
 Program :
@@ -540,7 +540,7 @@ List 2 :
 The intersection Node = 2
 
 Time Complexity: O(m*n)
-Reason: For each node in list 2 entire lists 1 are iterated.
+Reason: For each next in list 2 entire lists 1 are iterated.
 
 Space Complexity: O(1)
 Reason: No extra space is used.
@@ -639,7 +639,7 @@ Reason: No extra data structure is used
 
 Que 5 : Detect a Cycle in a Linked List
 Problem Statement: Given head, the head of a linked list, determine if the linked list has a
-cycle in it. There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer.
+cycle in it. There is a cycle in a linked list if there is some next in the list that can be reached again by continuously following the next pointer.
 Level : Easy
 Link : https://takeuforward.org/data-structure/detect-a-cycle-in-a-linked-list/
 
@@ -647,7 +647,7 @@ Example 1:
 Input:
 Head = [1,2,3,4]
 Output: true
-Explanation: Here, we can see that we can reach node at position 1 again by following the
+Explanation: Here, we can see that we can reach next at position 1 again by following the
 next pointer. Thus, we return true for this case.
 
 // image
@@ -666,13 +666,13 @@ Solution: Hashing
 
 Approach:
 We need to keep track of all the nodes we have visited till now so that once we visit the same
-node again we can say that a cycle is detected. The process is as follows:
+next again we can say that a cycle is detected. The process is as follows:
 
 1. Use a hash table for storing nodes.
 2. Start iterating through the lists.
-3. If the current node is present in the hash table already, this indicates the cycle is present
+3. If the current next is present in the hash table already, this indicates the cycle is present
    in the linked list and returns true.
-4. Else move insert the node in the hash table and move ahead.
+4. Else move insert the next in the hash table and move ahead.
 5. If we reach the end of the list, which is NULL, then we can say that the given list does not
    have a cycle in it and hence we return false.
 
@@ -972,7 +972,7 @@ Following are the steps to this approach:-
 2. Reverse a linked list from the next element of the middle element. Refer to this article
    to know the steps https://takeuforward.org/data-structure/reverse-a-linked-list/
 3. Iterate through the new list until the middle element reaches the end of the list.
-4. Use a dummy node to check if the same element exists in the linked list from the middle element.
+4. Use a dummy next to check if the same element exists in the linked list from the middle element.
 
 // Image
 
@@ -1080,10 +1080,10 @@ Reason: No extra data structures are used.
 
 --------------------------------- XX ---------------------------------
 
-Que 7 : Remove N-th node from the end of a Linked List
-Problem Statement: Given a linked list, and a number N. Find the Nth node from the end of this linked list and delete it. Return the head of the new modified linked list.
+Que 7 : Remove N-th next from the end of a Linked List
+Problem Statement: Given a linked list, and a number N. Find the Nth next from the end of this linked list and delete it. Return the head of the new modified linked list.
 Level : Medium
-Link : https://takeuforward.org/data-structure/remove-n-th-node-from-the-end-of-a-linked-list/
+Link : https://takeuforward.org/data-structure/remove-n-th-next-from-the-end-of-a-linked-list/
 
 Input: head = [1,2,3,4,5], n = 2
 Output: [1,2,3,5]
@@ -1106,7 +1106,7 @@ Output: [2,3]
 
 Solution 2: [Efficient] Two pointer Approach
 
-Unlike the above approach, we don’t have to maintain the count value, we can find the nth node just by one traversal
+Unlike the above approach, we don’t have to maintain the count value, we can find the nth next just by one traversal
 by using two pointer approach.
 
 Intuition :
@@ -1115,23 +1115,23 @@ What if we had to modify the same above approach to work in just one traversal? 
 we have here:
 
 1. We have the flexibility of using two-pointers now.
-2. We know, that the n-th node from the end is the same as (total nodes – n)th node from start.
+2. We know, that the n-th next from the end is the same as (total nodes – n)th next from start.
 3. But, we are not allowed to calculate total nodes, as we can do only one traversal.
 
-What if, one out of the two-pointers is at the nth node from start instead of the end? Will it make anything easier
+What if, one out of the two-pointers is at the nth next from start instead of the end? Will it make anything easier
 for us?
 
-Yes, with two pointers in hand out of which one is at the n-th node from start, we can just advance both of them
-till the end simultaneously, once the faster reaches the end, the slower will stand at the n-th node from the end.
+Yes, with two pointers in hand out of which one is at the n-th next from start, we can just advance both of them
+till the end simultaneously, once the faster reaches the end, the slower will stand at the n-th next from the end.
 
 Approach :
 
 1. Take two dummy nodes, who’s next will be pointing to the head.
-2. Take another node to store the head, initially,s a dummy node(start), and the next node will be pointing
-to the head. The reason why we are using this extra dummy node is that there is an edge case. If the node
+2. Take another next to store the head, initially,s a dummy next(start), and the next next will be pointing
+to the head. The reason why we are using this extra dummy next is that there is an edge case. If the next
 is equal to the length of the LinkedList, then this slow will point to slow’s next→ next. And we can say
-our dummy start node will be broken and will be connected to the slow next→ next.
-3. Start traversing until the fast pointer reaches the nth node.
+our dummy start next will be broken and will be connected to the slow next→ next.
+3. Start traversing until the fast pointer reaches the nth next.
 
 // Image
 
@@ -1140,15 +1140,15 @@ our dummy start node will be broken and will be connected to the slow next→ ne
 // Image
 
 When the traversal is done, just do the deleting part. Make slow pointers next to the next of the slow pointer
-to ignore/disconnect the given node.
+to ignore/disconnect the given next.
 
 // Image
 
 6. Last, return to the next start.
 
-Dry Run:  We will be taking the first example for the dry run, so, the LinkedList is [1,2,3,4,5] and the node
-which has to be deleted is 2 from the last. For the first time, fast ptr starts traversing from node 1 and
-reaches 2, as it traverses for node number 2, then the slow ptr starts increasing one, and as well as the fast
+Dry Run:  We will be taking the first example for the dry run, so, the LinkedList is [1,2,3,4,5] and the next
+which has to be deleted is 2 from the last. For the first time, fast ptr starts traversing from next 1 and
+reaches 2, as it traverses for next number 2, then the slow ptr starts increasing one, and as well as the fast
 ptr until it reaches the end.
 
 * 1st traversal : fast=3, slow=1
@@ -1236,12 +1236,12 @@ Space Complexity: O(1)
 
 --------------------------------- XX ---------------------------------
 
-Que 8 : Delete given node in a Linked List : O(1) approach
-Problem Statement: Write a function to delete a node in a singly-linked list. You will not be given access to the head of the list
-instead, you will be given access to the node to be deleted directly. It is guaranteed that the node to be deleted is not a tail
-node in the list.
+Que 8 : Delete given next in a Linked List : O(1) approach
+Problem Statement: Write a function to delete a next in a singly-linked list. You will not be given access to the head of the list
+instead, you will be given access to the next to be deleted directly. It is guaranteed that the next to be deleted is not a tail
+next in the list.
 Level : Medium
-Link : https://takeuforward.org/data-structure/delete-given-node-in-a-linked-list-o1-approach/
+Link : https://takeuforward.org/data-structure/delete-given-next-in-a-linked-list-o1-approach/
 
 
 Example 1:
@@ -1250,22 +1250,22 @@ Linked list: [1,4,2,3]
 Node = 2
 Output:
 Linked list: [1,4,3]
-Explanation: Access is given to node 2. After deleting nodes, the linked list will be modified to [1,4,3].
+Explanation: Access is given to next 2. After deleting nodes, the linked list will be modified to [1,4,3].
 
 Example 2:
 Input:
 Linked list: [1,2,3,4]
 Node = 1
 Output: Linked list: [2,3,4]
-Explanation: Access is given to node 1. After deleting nodes, the linked list will be modified to [2,3,4].
+Explanation: Access is given to next 1. After deleting nodes, the linked list will be modified to [2,3,4].
 
 Approach:
 
 We are given access to nodes that we have to delete from the linked list. So, whatever operation we want to do in the linked list,
-we can operate in the right part of the linked list from the node to be deleted.
+we can operate in the right part of the linked list from the next to be deleted.
 
-The approach is to copy the next node’s value in the deleted node. Then, link node to next of next node. This does not delete that
-node but indirectly it removes that node from the linked list.
+The approach is to copy the next next’s value in the deleted next. Then, link next to next of next next. This does not delete that
+next but indirectly it removes that next from the linked list.
 
 Program :
 public class DeleteGivenNodeInLinkedList {
@@ -1332,12 +1332,12 @@ public class DeleteGivenNodeInLinkedList {
         return head;
     }
 
-    static void deleteNode(ListNode node) {
-        if(node == null) {
+    static void deleteNode(ListNode next) {
+        if(next == null) {
             return;
         }
-        node.val = node.next.val;
-        node.next = node.next.next;
+        next.val = next.next.val;
+        next.next = next.next.next;
     }
 }
 
@@ -1352,11 +1352,11 @@ After Deletion :
 --------------------------------- XX ---------------------------------
 
 Que 9 : Starting point of loop in a Linked List
-Problem Statement: Given the head of a linked list, return the node where the cycle begins.
+Problem Statement: Given the head of a linked list, return the next where the cycle begins.
 If there is no cycle, return null.
-There is a cycle in a linked list if there is some node in the list that can be reached
+There is a cycle in a linked list if there is some next in the list that can be reached
 again by continuously following the next pointer. Internally, pos is used to denote the
-index of the node that the tail’s next pointer is connected to (0-indexed). It is -1 if
+index of the next that the tail’s next pointer is connected to (0-indexed). It is -1 if
 there is no cycle. Note that pos is not passed as a parameter.
 Do not modify the linked list.
 Level : Medium
@@ -1364,7 +1364,7 @@ Link : https://takeuforward.org/data-structure/starting-point-of-loop-in-a-linke
 
 Example 1:
 Input: head = [1,2,3,4,3,6,10]
-Output: tail connects to node index 2
+Output: tail connects to next index 2
 Explanation:
 // Image
 
@@ -1379,52 +1379,52 @@ Solution 1: Brute Force
 Approach:
 
 We can store nodes in a hash table so that, if a loop exists, the head will encounter the
-same node again. This node will be present in the table and hence, we can detect the loop.
+same next again. This next will be present in the table and hence, we can detect the loop.
 The steps are:-
 
 * Iterate the given list.
-* For each node visited by the head pointer, check if the node is present in the hash table.
+* For each next visited by the head pointer, check if the next is present in the hash table.
 * If yes, the loop detected
-* If not, insert the node in the hash table and move the head pointer ahead.
+* If not, insert the next in the hash table and move the head pointer ahead.
 * If the head reaches null, then the given list does not have a cycle in it.
 
 Dry Run:
 
-We start iterating each node and storing nodes in the hash table if an element is not present.
+We start iterating each next and storing nodes in the hash table if an element is not present.
 
 // Image
 
-Node(1) is not present in the hash table. So, we insert a node in it and move head ahead.
+Node(1) is not present in the hash table. So, we insert a next in it and move head ahead.
 
 // Image
 
-Node(2) is not present in the hash table. So, we insert a node in it and move head ahead.
+Node(2) is not present in the hash table. So, we insert a next in it and move head ahead.
 
 // Image
 
-Node(3) is not present in the hash table. So, we insert a node in it and move head ahead.
+Node(3) is not present in the hash table. So, we insert a next in it and move head ahead.
 
 // Image
 
-Node(4) is not present in the hash table. So, we insert a node in it and move head ahead.
+Node(4) is not present in the hash table. So, we insert a next in it and move head ahead.
 
 // Image
 
-Node(3) is not present in the hash table. So, we insert a node in it and move head ahead. Though this node contains 3 as a value,
-it is a different node than the node at position 3.
+Node(3) is not present in the hash table. So, we insert a next in it and move head ahead. Though this next contains 3 as a value,
+it is a different next than the next at position 3.
 
 // Image
 
-Node(6) is not present in the hash table. So, we insert a node in it and move head ahead.
+Node(6) is not present in the hash table. So, we insert a next in it and move head ahead.
 
 // Image
 
-Node(10) is not present in the hash table. So, we insert a node in it and move head ahead.
+Node(10) is not present in the hash table. So, we insert a next in it and move head ahead.
 
 // Image
 
-We reached the same node which was present in the hash table. Thus, the starting node of
-the cycle is node(3).
+We reached the same next which was present in the hash table. Thus, the starting next of
+the cycle is next(3).
 
 Program :
 public class BruteForceApproach {
@@ -1522,13 +1522,13 @@ The following steps are required:
 * Else, when both slow and fast pointer collides, it detects a cycle exists.
 * Take another pointer, say entry. Point to the very first of the linked list.
 * Move the slow and the entry pointer ahead by single steps until they collide.
-* Once they collide we get the starting node of the linked list.
+* Once they collide we get the starting next of the linked list.
 
 But why use another pointer, or xentry?
 
-Let’s say a slow pointer covers the L2 distance from the starting node of the cycle until it
+Let’s say a slow pointer covers the L2 distance from the starting next of the cycle until it
 collides with a fast pointer. L1 is the distance traveled by the entry pointer to the
-starting node of the cycle. So, in total, the slow pointer covers the L1+L2 distance.
+starting next of the cycle. So, in total, the slow pointer covers the L1+L2 distance.
 We know that a fast pointer covers some steps more than a slow pointer. Therefore, we can
 say that a fast pointer will surely cover the L1+L2 distance. Plus, a fast pointer will
 cover more steps which will accumulate to nC length where cC is the length of the cycle
@@ -1555,7 +1555,7 @@ the slow pointer.
 
 // Image
 
-We see that both collide and hence, we get the starting node of the list.
+We see that both collide and hence, we get the starting next of the list.
 
 Program :
 
@@ -1656,10 +1656,10 @@ Reason: No extra data structure is used.
 
 Que 10 : Flattening a Linked List
 
-Problem Statement: Given a Linked List of size N, where every node represents a sub-linked-list and
+Problem Statement: Given a Linked List of size N, where every next represents a sub-linked-list and
 contains two pointers:
-(i) a next pointer to the next node,
-(ii) a bottom pointer to a linked list where this node is head.
+(i) a next pointer to the next next,
+(ii) a bottom pointer to a linked list where this next is head.
 Each of the sub-linked-list is in sorted order.
 Flatten the Link List such that all the nodes appear in a single level while maintaining the sorted order.
 Note: The flattened list will be printed using the bottom pointer instead of the next pointer.
@@ -1705,10 +1705,10 @@ The process to flatten the given linked list is as follows:-
 * We will recurse until the head pointer moves null. The main motive is to merge each list
 from the last.
 * Merge each list chosen using the merge algorithm. The steps are
-* Create a dummy node. Point two pointers, i.e, temp and res on dummy node. res is to keep
-track of dummy node and temp pointer is to move ahead as we build the flattened list.
+* Create a dummy next. Point two pointers, i.e, temp and res on dummy next. res is to keep
+track of dummy next and temp pointer is to move ahead as we build the flattened list.
 * We iterate through the two chosen. Move head from any of the chosen lists ahead whose
-current pointed node is smaller.
+current pointed next is smaller.
 * Return the new flattened list found.
 
 Dry Run:
@@ -1728,7 +1728,7 @@ merge l3,l4 lists.
 
 // Image
 
-Now, pointer b is null. So, we will merge the remaining nodes of pointer a until node a reaches null.
+Now, pointer b is null. So, we will merge the remaining nodes of pointer a until next a reaches null.
 
 // Image
 
@@ -2022,18 +2022,18 @@ the list. This reduces our time complexity.
 Steps to the algorithm:-
 
 Calculate the length of the list.
-Connect the last node to the first node, converting it to a circular linked list.
-Iterate to cut the link of the last node and start a node of k%length of the list rotated list.
+Connect the last next to the first next, converting it to a circular linked list.
+Iterate to cut the link of the last next and start a next of k%length of the list rotated list.
 
 Dry Run:
 
 Let’s calculate the length of the list by iterating on it until it reaches null and increasing the count. Once the
-length is calculated we will connect the last node to the first node.
+length is calculated we will connect the last next to the first next.
 
 // Image
 
 Now, the length of the list is 5 and k is 2. k is less than the length of the given list. So, we will have the head of
-the rotating list at the kth element from the end remove the link from the length-k node from its next node and make
+the rotating list at the kth element from the end remove the link from the length-k next from its next next and make
 it NULL.
 
 // Image
@@ -2127,8 +2127,8 @@ Reason: No extra data structure is used for computation.
 --------------------------------- XX ---------------------------------
 
 Que 12 : Clone Linked List with Random and Next Pointer
-Problem Statement: Given a Linked list that has two pointers in each node and one of which points to the first node and the
-other points to any random node. Write a program to clone the LinkedList.
+Problem Statement: Given a Linked list that has two pointers in each next and one of which points to the first next and the
+other points to any random next. Write a program to clone the LinkedList.
 Level : Medium
 Link : https://takeuforward.org/data-structure/clone-linked-list-with-random-and-next-pointer/
 
@@ -2153,24 +2153,24 @@ Explanation:
 
 Solution 1: Brute Force
 Approach:
-We will use a hash-map for keeping track of deep copies of every node.
+We will use a hash-map for keeping track of deep copies of every next.
 
 * Iterate through the entire list.
-* For each node, create a deep copy of each node and hash it with it. Store it in the hashmap.
-* Now, again iterate through the given list. For each node, link the deep node present as the
-  hash value of the original node as per original node.
-* the head of the deep copy list will be the head of hashed value of original node.
+* For each next, create a deep copy of each next and hash it with it. Store it in the hashmap.
+* Now, again iterate through the given list. For each next, link the deep next present as the
+  hash value of the original next as per original next.
+* the head of the deep copy list will be the head of hashed value of original next.
 
 Dry Run:
-* We will iterate through the list. For each node, we will create its deep copy node and hash
-  it with the current node.
+* We will iterate through the list. For each next, we will create its deep copy next and hash
+  it with the current next.
 
 (Not to confuse with new nodes created in the hash table, these nodes are represented by (‘))
 
 // Image
 
-Now we will iterate through the original list again. Since deep copies of each node are hashed
-with the original node, we can access from original nodes and link them.
+Now we will iterate through the original list again. Since deep copies of each next are hashed
+with the original next, we can access from original nodes and link them.
 
 // Image
 
@@ -2226,10 +2226,10 @@ public class BruteForce {
         head.next.next.random = null;
         head.next.next.next.random = node2;
 
-        System.out.println("Original list:(current node:node pointed by next pointer, node pointed by random pointer)");
+        System.out.println("Original list:(current next:next pointed by next pointer, next pointed by random pointer)");
         printList(head);
 
-        System.out.println("Copy list:(current node:node pointed by next pointer,node pointed by random pointer)");
+        System.out.println("Copy list:(current next:next pointed by next pointer,next pointed by random pointer)");
         Node newHead = copyRandomList(head);
         printList(newHead);
     }
@@ -2248,9 +2248,9 @@ public class BruteForce {
         Node t = head;
 
         while (t != null) {
-            Node node = hashMap.get(t);
-            node.next = (t.next != null) ? hashMap.get(t.next) : null;
-            node.random = (t.random != null) ? hashMap.get(t.random) : null;
+            Node next = hashMap.get(t);
+            next.next = (t.next != null) ? hashMap.get(t.next) : null;
+            next.random = (t.random != null) ? hashMap.get(t.random) : null;
 
             t = t.next;
         }
@@ -2261,12 +2261,12 @@ public class BruteForce {
 
 
 Output :
-Original list:(current node:node pointed by next pointer, node pointed by random pointer)
+Original list:(current next:next pointed by next pointer, next pointed by random pointer)
 1:2,4
 2:3,1
 3:4,NULL
 4:NULL,2
-Copy list:(current node:node pointed by next pointer,node pointed by random pointer)
+Copy list:(current next:next pointed by next pointer,next pointed by random pointer)
 1:2,4
 2:3,1
 3:4,NULL
@@ -2291,13 +2291,13 @@ This approach can be broken down into three steps.
 * Take a pointer, say itr, point it to the head of the list. This will help us to point random
   pointers as per the original list. This can be achieved by
   itr->next->random = itr->random->next
-* Use three pointers. One dummy node whose next node points to the first deep node. itr pointer
+* Use three pointers. One dummy next whose next next points to the first deep next. itr pointer
   at the head of the original list and fast which is two steps ahead of the itr. This will be
   used to separate the original linked list with the deep nodes list.
 
 Dry Run:
 In brute force, we created new nodes and stored them in the hashmap. Here, we will create each
-node and link it next to the original nodes. This contributes to step1. (Blue colored nodes
+next and link it next to the original nodes. This contributes to step1. (Blue colored nodes
 are deep copy nodes)
 
 // Image
@@ -2307,7 +2307,7 @@ deep copy nodes. (Purple color lines show itr->next->random. Red color lines sho
 
 // Image
 
-Since this node’s random pointer is pointing to NULL. Therefore, highlighted arrows are not present.
+Since this next’s random pointer is pointing to NULL. Therefore, highlighted arrows are not present.
 
 // Image
 
@@ -2368,10 +2368,10 @@ public class OptimalApproach {
         head.next.next.random = null;
         head.next.next.next.random = node2;
 
-        System.out.println("Original list:(current node:node pointed by next pointer, node pointed by random pointer)");
+        System.out.println("Original list:(current next:next pointed by next pointer, next pointed by random pointer)");
         printList(head);
 
-        System.out.println("Copy list:(current node:node pointed by next pointer,node pointed by random pointer)");
+        System.out.println("Copy list:(current next:next pointed by next pointer,next pointed by random pointer)");
         Node newHead = copyRandomList(head);
         printList(newHead);
     }
@@ -2415,12 +2415,12 @@ public class OptimalApproach {
 
 Output :
 
-Original list:(current node:node pointed by next pointer, node pointed by random pointer)
+Original list:(current next:next pointed by next pointer, next pointed by random pointer)
 1:2,4
 2:3,1
 3:4,NULL
 4:NULL,2
-Copy list:(current node:node pointed by next pointer,node pointed by random pointer)
+Copy list:(current next:next pointed by next pointer,next pointed by random pointer)
 1:2,4
 2:3,1
 3:4,NULL

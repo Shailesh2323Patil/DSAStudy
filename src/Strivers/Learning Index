@@ -129,11 +129,11 @@ Remove Duplicate from Sorted array : Done
 
 Max consecutive ones : Done
 
-Delete a given Node when a node is given. : Done
+Delete a given Node when a next is given. : Done
 
 Medium:
 -------
-Remove N-th node from back of LinkedList : Done
+Remove N-th next from back of LinkedList : Done
 
 Add two numbers as LinkedList : Done
 

@@ -1,10 +1,10 @@
-package Strivers.linkedList.Easy.Plindrome;
+package Strivers.linkedList.Medium.Plindrome;
 
 import Strivers.linkedList.model.ListNode;
 
 import java.util.ArrayList;
 
-public class BruteForceApproach {
+public class PalindromeBruteForceArrayList {
 
     static ListNode insertNode(int val, ListNode head) {
         ListNode newNode = new ListNode(val);
