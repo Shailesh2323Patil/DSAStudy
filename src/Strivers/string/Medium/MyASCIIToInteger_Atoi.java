@@ -3,11 +3,11 @@ package Strivers.string.Medium;
 public class MyASCIIToInteger_Atoi {
     public static void main(String[] args) {
         //String s = "42";
-        //String s = " -042";
+        String s = " -042";
         //String s = "1337c0d3";
         //String s = "0-1";
         //String s = "words and 987";
-        String s = "+-12";
+        //String s = "+-12";
 
         System.out.println("The ATOI is " + myAtoi(s));
     }

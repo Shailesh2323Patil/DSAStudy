@@ -34,8 +34,9 @@ public class CombinationSum2 {
     }
 
     public static void main(String args[]) {
-        int v[] = {1, 1, 1, 2, 2};
-        List<List<Integer>> comb = combinationSum2(v, 4);
+        int v[] = {1, 2, 2, 2, 5};
+        int target = 5;
+        List<List<Integer>> comb = combinationSum2(v, target);
         System.out.println(comb.toString().replace(",", " "));
     }
 }

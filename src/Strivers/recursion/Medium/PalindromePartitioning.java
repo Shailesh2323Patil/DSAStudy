@@ -27,8 +27,9 @@ public class PalindromePartitioning {
 
     static boolean isPalindrome(String s, int start, int end) {
         while (start <= end) {
-            if (s.charAt(start++) != s.charAt(end--))
+            if (s.charAt(start++) != s.charAt(end--)) {
                 return false;
+            }
         }
         return true;
     }
